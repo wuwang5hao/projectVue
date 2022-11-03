@@ -1,0 +1,54 @@
+/*******************************
+        mixins Overrides
+*******************************/
+.primary-gradient() {
+    background: linear-gradient(90deg, @primary-15, @primary);
+}
+
+.blue-gradient() {
+    background: linear-gradient(90deg, @blue-lighten, @blue);
+}
+
+.red-gradient() {
+    background: linear-gradient(90deg, @red-lighten, @red);
+}
+
+.orange-gradient() {
+    background: linear-gradient(90deg, @orange-lighten, @orange);
+}
+
+.yellow-gradient() {
+    background: linear-gradient(90deg, @yellow-lighten, @yellow);
+}
+
+.green-gradient() {
+    background: linear-gradient(90deg, @green-lighten, @green);
+}
+
+.gold-gradient() {
+    background: linear-gradient(90deg, @gold-lighten, @gold);
+}
+
+.purple-gradient() {
+    background: linear-gradient(90deg, @purple-lighten, @purple);
+}
+
+.mixin-max-wh() {
+  min-width: 320px;
+  max-width: 600px;
+}
+
+.mixin-fixed-cl() {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/*  shadow  */
+
+.shadow() {
+    text-shadow: 0px 1px 2px @grey60;
+}
+
+.card-shadow(@color) {
+    box-shadow: 0px 1px 5px lighten(@color, 20%), 0px 5px 10px lighten(@color, 30%);
+}

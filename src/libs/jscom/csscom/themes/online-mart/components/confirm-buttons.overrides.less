@@ -1,0 +1,48 @@
+/*******************************
+         Theme Overrides
+*******************************/
+.om-confirm-buttons {
+  overflow: hidden;
+  user-select: none;
+  position: relative;
+  background-color: @white;
+  -webkit-text-size-adjust: 100%; /* avoid iOS text size adjust */
+  padding-bottom: 20px;
+
+  & .cancel,
+  & .confirm {
+    color: @blue;
+    padding: 0 15px;
+
+    &:active {
+      background-color: @active-color;
+    }
+  }
+
+  & .toolbar {
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+
+  & .title {
+    max-width: 50%;
+    text-align: center;
+  }
+
+  & .loading {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    position: absolute;
+    background-color: rgba(255,255,255,.9);
+
+    circle {
+      stroke: @blue;
+    }
+  }
+}

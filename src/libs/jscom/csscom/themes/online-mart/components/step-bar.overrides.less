@@ -1,0 +1,199 @@
+/*******************************
+    step-bar   Overrides
+*******************************/
+
+.om-step-bar {
+  overflow: hidden;
+  background-color: @white;
+
+  &-horizontal {
+    padding: 0 10px;
+
+    .items {
+      display: flex;
+      margin: 0 0 10px;
+      overflow: hidden;
+      position: relative;
+      padding-bottom: 22px;
+
+      &.items-alone {
+        padding-top: 10px;
+      }
+    }
+  }
+
+  &-vertical {
+    padding: 0 0 0 35px;
+  }
+
+  & .icon {
+    float: left;
+    margin-right: 10px;
+  }
+
+  .om-icon {
+    font-size: 40px;
+  }
+
+  & .message {
+    height: 40px;
+    margin: 15px 0;
+  }
+
+  & > .title {
+    font-size: 14px;
+    color: @text-color;
+    padding-top: 4px;
+  }
+
+  & .desc {
+    font-size: 12px;
+    line-height: 1.5;
+    color: @gray-dark;
+  }
+}
+
+.om-step-item {
+  flex: 1;
+  font-size: 14px;
+  position: relative;
+  color: @gray-dark;
+
+  &-horizontal {
+    float: left;
+
+    &:first-child {
+      .title {
+        transform: none;
+        margin-left: 0;
+      }
+    }
+
+    &:last-child {
+      position: absolute;
+      right: 10px;
+      width: auto;
+
+      .title {
+        transform: none;
+        margin-left: 0;
+      }
+
+      .circle-container {
+        left: auto;
+        right: -9px;
+      }
+
+      .line {
+        width: 0;
+      }
+    }
+
+    .circle-container {
+      position: absolute;
+      top: 28px;
+      left: -8px;
+      padding: 0 8px;
+      background-color: @white;
+      z-index: 1;
+    }
+
+    .title {
+      font-size: 12px;
+      transform: translate3d(-50%, 0, 0);
+      display: inline-block;
+      margin-left: 3px;
+    }
+
+    .line {
+      position: absolute;
+      left: 0px;
+      top: 30px;
+      width: 100%;
+      height: 1px;
+      background-color: @gray-light;
+    }
+
+    &.om-step-item-finish {
+      color: @text-color;
+
+      .circle,
+      .line {
+        background-color: @green;
+      }
+    }
+
+    &.om-step-item-process {
+      color: @text-color;
+
+      .circle-container {
+        top: 24px;
+      }
+
+      .om-icon {
+        font-size: 12px;
+        color: @green;
+        display: block;
+      }
+    }
+  }
+
+  .circle {
+    display: block;
+    width: 5px;
+    height: 5px;
+    background-color: #888;
+    border-radius: 50%;
+  }
+
+  &-vertical {
+    float: none;
+    display: block;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 10px 10px 10px 0;
+
+    &:not(:last-child)::after {
+      border-bottom-width: 1px;
+    }
+
+    &:first-child {
+      &::before {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 20px;
+        background-color: @white;
+        top: 0;
+        left: -15px;
+        z-index: 1;
+      }
+    }
+
+    .circle-container > i {
+      position: absolute;
+      z-index: 2;
+    }
+
+    .om-icon-checked {
+      top: 12px;
+      left: -20px;
+      line-height: 1;
+      font-size: 12px;
+    }
+
+    .circle {
+      top: 16px;
+      left: -17px;
+    }
+
+    .line {
+      position: absolute;
+      top: 0;
+      left: -15px;
+      width: 1px;
+      height: 100%;
+      background-color: @gray-light;
+    }
+  }
+}

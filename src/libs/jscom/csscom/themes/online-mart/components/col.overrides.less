@@ -1,0 +1,16 @@
+/*******************************
+    col   Overrides
+*******************************/
+
+.om-col {
+  float: left;
+  box-sizing: border-box;
+}
+
+.generate-col-span(24);
+
+.generate-col-span(@n, @i: 1) when (@i <= @n) {
+  .om-col-@{i} { width: calc(@i * 100% / 24); }
+  .om-col-offset-@{i} { margin-left: calc(@i * 100% / 24); }
+  .generate-col-span(@n, (@i + 1));
+}

@@ -1,0 +1,71 @@
+/*******************************
+    navbar   Overrides
+*******************************/
+
+.om-navbar {
+  height: 46px;
+  position: relative;
+  user-select: none;
+  text-align: center;
+  line-height: 46px;
+  background-color: @white;
+  color: @grey80;
+
+  .om-icon {
+    color: @grey60;
+    vertical-align: middle;
+  }
+
+  & .arrow {
+    color: @blue;
+    + .om-navbar .text {
+      margin-left: -20px;
+      padding-left: 25px;
+    }
+  }
+
+  &-fixed {
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
+  }
+
+  & > .title {
+    margin: 0 auto;
+    max-width: 60%;
+    font-size: @larger-font-size;
+  }
+
+  & > .left,
+  & > .right {
+    bottom: 0;
+    font-size: @large-font-size;
+    position: absolute;
+  }
+
+  & > .left {
+    left: 15px;
+  }
+
+  & > .right {
+    right: 15px;
+  }
+
+  & .text {
+    color: @blue;
+    margin: 0 -15px;
+    padding: 0 15px;
+    display: inline-block;
+    vertical-align: middle;
+    position: static;
+
+    &:active {
+      background-color: @active-color;
+    }
+  }
+
+  &.om-hairline-bottom::after{
+    border-bottom: 1px solid @grey20;
+  }
+}

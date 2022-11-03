@@ -1,0 +1,57 @@
+/*******************************
+    tree-select   Overrides
+*******************************/
+
+
+.om-tree-select {
+  user-select: none;
+  position: relative;
+
+  & > .nav {
+    width: 143px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: scroll;
+    background-color: @white;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  & .nitem {
+    line-height: 44px;
+    padding: 0 15px;
+    background-color: @white;
+
+    &-active {
+      background-color: @background-color;
+    }
+  }
+
+  & > .content {
+    padding: 0 15px;
+    margin-left: 143px;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  & .item {
+    position: relative;
+    line-height: 44px;
+    padding-left: 5px;
+    padding-right: 18px;
+
+    &-active {
+      color: @button-danger-background-color;
+    }
+  }
+
+  & .selected {
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    line-height: inherit;
+  }
+}

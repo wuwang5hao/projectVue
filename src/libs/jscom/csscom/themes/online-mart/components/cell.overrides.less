@@ -1,0 +1,96 @@
+/*******************************
+         Theme Overrides
+*******************************/
+.om-cell {
+  display: flex;
+  padding: @vertical-padding @horizontal-padding;
+  box-sizing: border-box;
+  line-height: 24px;
+  position: relative;
+  background-color: @white;
+  color: @text-color;
+  font-size: 14px;
+  overflow: hidden;
+  align-items: center;
+
+  &:not(:last-child)::after {
+    right: 0;
+    width: auto;
+    transform: scale(1, .5);
+    border-bottom-width: 1px;
+  }
+
+  & > .title > .label {
+    font-size: 12px;
+    line-height: 1.2;
+    color: @gray-darker;
+  }
+
+  & > .title {
+    color: @gray-darker;
+    padding-right: @small-horz-padding;
+    &-alone {
+      flex: 1;
+    }
+  }
+
+  /* & > .title, */
+  & > .value {
+    flex: 1;
+  }
+
+  & > .value {
+    overflow: hidden;
+    text-align: right;
+    vertical-align: middle;
+
+    &-alone {
+      text-align: left;
+    }
+  }
+
+  & > .left-icon {
+    font-size: 16px;
+    line-height: 24px;
+    margin-right: 5px;
+  }
+
+  & > .right-icon {
+    color: @gray-dark;
+    font-size: 12px;
+    line-height: 24px;
+    margin-left: 5px;
+  }
+
+  &-clickable {
+    &:active {
+      background-color: @active-color;
+    }
+  }
+
+  &-required {
+    overflow: visible;
+
+    &::before {
+      content: '*';
+      position: absolute;
+      left: 7px;
+      font-size: 14px;
+      color: @red;
+    }
+  }
+
+  &-center {
+    align-items: center;
+  }
+
+  &-nopadding {
+    padding: 0px 0px;
+  }
+  &-nohpadding {
+    padding: @vertical-padding 0;
+  }
+  &-novpadding {
+    padding: 0 @horizontal-padding;
+  }
+}

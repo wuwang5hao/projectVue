@@ -1,0 +1,91 @@
+// Framework grid generation
+//
+// Used only by Bootstrap to generate the correct number of grid classes given
+// any value of `@grid-columns`.
+
+.v3-make-grid-columns() {
+  // Common styles for all sizes of grid columns, widths 1-12
+  .v3-col(@index) { // initial
+    @item: ~".v3-col-xs-@{index}, .v3-col-sm-@{index}, .v3-col-md-@{index}, .v3-col-lg-@{index}";
+    .v3-col((@index + 1), @item);
+  }
+  .v3-col(@index, @list) when (@index =< @grid-columns) { // general; "=<" isn't a typo
+    @item: ~".v3-col-xs-@{index}, .v3-col-sm-@{index}, .v3-col-md-@{index}, .v3-col-lg-@{index}";
+    .v3-col((@index + 1), ~"@{list}, @{item}");
+  }
+  .v3-col(@index, @list) when (@index > @grid-columns) { // terminal
+    @{list} {
+      position: relative;
+      // Prevent columns from collapsing when empty
+      min-height: 1px;
+      // Inner gutter via padding
+      padding-right: floor((@grid-gutter-width / 2));
+      padding-left: ceil((@grid-gutter-width / 2));
+    }
+  }
+  .v3-col(1); // kickstart it
+}
+
+.v3-float-grid-columns(@class) {
+  .v3-col(@index) { // initial
+    @item: ~".v3-col-@{class}-@{index}";
+    .v3-col((@index + 1), @item);
+  }
+  .v3-col(@index, @list) when (@index =< @grid-columns) { // general
+    @item: ~".v3-col-@{class}-@{index}";
+    .v3-col((@index + 1), ~"@{list}, @{item}");
+  }
+  .v3-col(@index, @list) when (@index > @grid-columns) { // terminal
+    @{list} {
+      float: left;
+    }
+  }
+  .v3-col(1); // kickstart it
+}
+
+.v3-calc-grid-column(@index, @class, @type) when (@type = width) and (@index > 0) {
+  .v3-col-@{class}-@{index} {
+    width: percentage((@index / @grid-columns));
+  }
+}
+.v3-calc-grid-column(@index, @class, @type) when (@type = push) and (@index > 0) {
+  .v3-col-@{class}-push-@{index} {
+    left: percentage((@index / @grid-columns));
+  }
+}
+.v3-calc-grid-column(@index, @class, @type) when (@type = push) and (@index = 0) {
+  .v3-col-@{class}-push-0 {
+    left: auto;
+  }
+}
+.v3-calc-grid-column(@index, @class, @type) when (@type = pull) and (@index > 0) {
+  .v3-col-@{class}-pull-@{index} {
+    right: percentage((@index / @grid-columns));
+  }
+}
+.v3-calc-grid-column(@index, @class, @type) when (@type = pull) and (@index = 0) {
+  .v3-col-@{class}-pull-0 {
+    right: auto;
+  }
+}
+.v3-calc-grid-column(@index, @class, @type) when (@type = offset) {
+  .v3-col-@{class}-offset-@{index} {
+    margin-left: percentage((@index / @grid-columns));
+  }
+}
+
+// Basic looping in LESS
+.v3-loop-grid-columns(@index, @class, @type) when (@index >= 0) {
+  .v3-calc-grid-column(@index, @class, @type);
+  // next iteration
+  .v3-loop-grid-columns((@index - 1), @class, @type);
+}
+
+// Create grid for specific class
+.v3-make-grid(@class) {
+  .v3-float-grid-columns(@class);
+  .v3-loop-grid-columns(@grid-columns, @class, width);
+  .v3-loop-grid-columns(@grid-columns, @class, pull);
+  .v3-loop-grid-columns(@grid-columns, @class, push);
+  .v3-loop-grid-columns(@grid-columns, @class, offset);
+}

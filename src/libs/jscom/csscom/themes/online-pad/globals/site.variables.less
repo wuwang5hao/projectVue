@@ -1,0 +1,129 @@
+/*******************************
+         Site Settings
+*******************************/
+
+/*-------------------
+       Colors
+--------------------*/
+@white: #fff;
+@black: #000;
+@grey80: darken(@white, 80%);
+@grey60: darken(@white, 60%);
+@grey50: darken(@white, 50%);
+@grey40: darken(@white, 40%);
+@grey20: darken(@white, 20%);
+@grey10: darken(@white, 10%);
+@grey5: darken(@white, 5%);
+@grey2: darken(@white, 2%);
+@grey1: darken(@white, 1%);
+@primary: #ed722e;
+@primary-lighten: lighten(@primary, 10%);
+@primary-darken: darken(@primary, 10%);
+@primary-15: spin(@primary, 15);
+@primary-15-lighten: lighten(@primary-15, 10%);
+@primary-15-darken: darken(@primary-15, 10%);
+@primary-30: spin(@primary, 30);
+@primary-30-lighten: lighten(@primary-30, 10%);
+@primary-30-darken: darken(@primary-30, 10%);
+@primary-15neg: spin(@primary, -15);
+@primary-15neg-lighten: lighten(@primary-15neg, 10%);
+@primary-15neg-darken: darken(@primary-15neg, 10%);
+@primary-30neg: spin(@primary, -30);
+@primary-30neg-lighten: lighten(@primary-30neg, 10%);
+@primary-30neg-darken: darken(@primary-30neg, 10%);
+@blue: #2ea8e6;
+@blue-lighten: lighten(@blue, 10%);
+@blue-darken: darken(@blue, 10%);
+@red: #e62e2e;
+@red-lighten: lighten(@red, 10%);
+@red-darken: darken(@red, 10%);
+@red-lighten2: lighten(@red, 20%);
+@red-darken2: darken(@red, 20%);
+@orange: #eba000;
+@orange-lighten: lighten(@orange, 10%);
+@orange-darken: darken(@orange, 10%);
+@yellow: #e4e400;
+@yellow-lighten: lighten(@yellow, 10%);
+@yellow-darken: darken(@yellow, 10%);
+@green: #7bcd51;
+@green-lighten: lighten(@green, 10%);
+@green-darken: darken(@green, 10%);
+@gold: #e5d2ab;
+@gold-lighten: lighten(@gold, 10%);
+@gold-lighten2: lighten(@gold, 30%);
+@gold-darken: darken(@gold, 10%);
+@gold-darken2: darken(@gold, 30%);
+@purple: #45029c;
+@purple-lighten: lighten(@purple, 10%);
+@purple-darken: darken(@purple, 10%);
+@success: #66cc80;
+@error: #cc6666;
+@caution: #e6b522;
+@info: #66aacc;
+@notice: #ffffcc;
+
+/* default colors */
+@text-color: @grey50;
+@border-color: @grey5;
+@active-color: @primary;
+@background-color: #f8f8f8;
+@el-bg-color: @white;
+
+@gray: @grey50;
+@gray-light: @grey10;
+@gray-darker: @grey80;
+@gray-dark: @grey60;
+
+/*-------------------
+       Buttons
+--------------------*/
+@button-default-color: @text-color;
+@button-default-background-color: @white;
+@button-default-border-color: @gray-light;
+@button-primary-color: @white;
+@button-primary-background-color: @primary;
+@button-primary-border-color: @primary;
+@button-danger-color: @white;
+@button-danger-background-color: @red;
+@button-danger-border-color: @red;
+@button-disabled-color: @gray-dark;
+@button-disabled-background-color: @gray-light;
+@button-disabled-border-color: @border-color;
+@button-bottom-action-default-color: @white;
+@button-bottom-action-default-background-color: #f85;
+@button-bottom-action-primary-color: @white;
+@button-bottom-action-primary-background-color: @red;
+
+/*-------------------
+       Fonts
+--------------------*/
+@importGoogleFonts : false;
+
+
+/*-------------------
+       size
+--------------------*/
+@height-small: 44px;
+@height-medium: 50px;
+@height-large: 56px;
+
+@larger-font-size       : 0.4rem;
+@large-font-size        : 0.35rem;
+@normal-font-size       : 0.3rem;
+@small-font-size        : 0.2rem;
+@tiny-font-size         : 0.1rem;
+
+@h1-font-size           : 0.65rem;
+@h2-font-size           : 0.6rem;
+@h3-font-size           : 0.55rem;
+@h4-font-size           : 0.5rem;
+@h5-font-size           : 0.45rem;
+
+@small-horz-padding: 0.2rem;
+@horizontal-padding: 0.375rem;
+@vertical-padding: 0.25rem;
+@item-space: 0.25rem;
+@large-item-space: 0.4rem;
+
+@import (optional) "jscom/styles/globals/site.variables.less";
+@import (optional) "jsapp/styles/globals/site.variables.less";

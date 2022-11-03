@@ -1,0 +1,150 @@
+/*******************************
+        Global Overrides
+*******************************/
+/*!
+ *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+ */
+
+@import "csscom/common/font-awesome-4.7.0/less/variables.less";
+@fa-css-prefix:       om-icon;
+@import "csscom/common/font-awesome-4.7.0/less/mixins.less";
+@import "csscom/common/font-awesome-4.7.0/less/path.less";
+@import "csscom/common/font-awesome-4.7.0/less/core.less";
+@import "csscom/common/font-awesome-4.7.0/less/larger.less";
+@import "csscom/common/font-awesome-4.7.0/less/fixed-width.less";
+@import "csscom/common/font-awesome-4.7.0/less/list.less";
+@import "csscom/common/font-awesome-4.7.0/less/bordered-pulled.less";
+@import "csscom/common/font-awesome-4.7.0/less/animated.less";
+@import "csscom/common/font-awesome-4.7.0/less/rotated-flipped.less";
+@import "csscom/common/font-awesome-4.7.0/less/stacked.less";
+@import "csscom/common/font-awesome-4.7.0/less/icons.less";
+@import "csscom/common/font-awesome-4.7.0/less/screen-reader.less";
+
+/* mixins  */
+.hairline(@border-retina-color: @grey5) {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  transform: scale(0.5);
+  transform-origin: 0 0;
+  pointer-events: none;
+  box-sizing: border-box;
+  border: 0 solid @border-retina-color;
+}
+
+.om-multi-ellipsis(@lines) {
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: @lines;
+  -webkit-box-orient: vertical;
+}
+
+.om-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* global style */
+[class*='om-hairline'] {
+  position: relative;
+
+  &::after {
+    .hairline();
+  }
+}
+
+.om-hairline {
+  &-top::after {
+    border-top-width: 1px;
+  }
+
+  &-left::after {
+    border-left-width: 1px;
+  }
+
+  &-right::after {
+    border-right-width: 1px;
+  }
+
+  &-bottom::after {
+    border-bottom-width: 1px;
+  }
+
+  &-top-bottom::after {
+    border-width: 1px 0;
+  }
+
+  &-surround::after {
+    border-width: 1px;
+  }
+}
+
+a:hover, a:focus {
+  text-decoration: none;
+}
+
+/* animations */
+@keyframes om-slide-bottom-enter {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes om-slide-bottom-leave {
+  to {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes om-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes om-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes om-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.om-fade {
+  &-enter-active {
+    animation: 0.3s om-fade-in;
+  }
+
+  &-leave-active {
+    animation: 0.3s om-fade-out;
+  }
+}
+
+.om-slide-bottom {
+  &-enter-active {
+    animation: om-slide-bottom-enter 0.3s both ease;
+  }
+
+  &-leave-active {
+    animation: om-slide-bottom-leave 0.3s both ease;
+  }
+}

@@ -1,0 +1,32 @@
+/*******************************
+    collapse-item   Overrides
+*******************************/
+.om-collapse-item {
+  & > .title {
+    & .right-icon::before {
+      transition: .3s;
+      transform: rotate(90deg);
+    }
+
+    &::after {
+      visibility: hidden;
+    }
+  }
+
+  & > .content {
+    padding: 15px;
+    background-color: #fff;
+  }
+
+  &-expanded {
+    & > .title {
+      & .right-icon::before {
+        transform: rotate(-90deg);
+      }
+
+      &::after {
+        visibility: visible;
+      }
+    }
+  }
+}

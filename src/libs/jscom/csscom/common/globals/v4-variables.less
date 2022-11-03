@@ -1,0 +1,347 @@
+// Variables
+//
+// Variables should follow the `@component-state-property-size` formula for
+// consistent naming. Ex: @nav-link-disabled-color and @modal-content-box-shadow-xs.
+
+
+//
+// Color system
+//
+
+@white:    #fff;
+@gray-100: #f8f9fa;
+@gray-200: #e9ecef;
+@gray-300: #dee2e6;
+@gray-400: #ced4da;
+@gray-500: #adb5bd;
+@gray-600: #6c757d;
+@gray-700: #495057;
+@gray-800: #343a40;
+@gray-900: #212529;
+@black:    #000;
+
+@grays:
+  100   @gray-100,
+  200   @gray-200,
+  300   @gray-300,
+  400   @gray-400,
+  500   @gray-500,
+  600   @gray-600,
+  700   @gray-700,
+  800   @gray-800,
+  900   @gray-900;
+
+@blue:    #007bff;
+@indigo:  #6610f2;
+@purple:  #6f42c1;
+@pink:    #e83e8c;
+@red:     #dc3545;
+@orange:  #fd7e14;
+@yellow:  #ffc107;
+@green:   #28a745;
+@teal:    #20c997;
+@cyan:    #17a2b8;
+
+@colors:
+  blue         @blue,
+  indigo       @indigo,
+  purple       @purple,
+  pink         @pink,
+  red          @red,
+  orange       @orange,
+  yellow       @yellow,
+  green        @green,
+  teal         @teal,
+  cyan         @cyan,
+  white        @white,
+  gray         @gray-600,
+  gray-dark    @gray-800;
+
+@primary:       @blue;
+@secondary:     @gray-600;
+@success:       @green;
+@info:          @cyan;
+@warning:       @yellow;
+@danger:        @red;
+@light:         @gray-100;
+@dark:          @gray-800;
+
+@theme-colors:
+  primary      @primary,
+  secondary    @secondary,
+  success      @success,
+  info         @info,
+  warning      @warning,
+  danger       @danger,
+  light        @light,
+  dark         @dark;
+
+// Set a specific jump point for requesting color jumps
+@theme-color-interval:      8%;
+
+// The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
+@yiq-contrasted-threshold:  150;
+
+// Customize the light and dark text colors for use in our YIQ color contrast function.
+@yiq-text-dark:             @gray-900;
+@yiq-text-light:            @white;
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+
+@enable-caret:              true;
+@enable-rounded:            true;
+@enable-shadows:            true;
+@enable-gradients:          true;
+@enable-transitions:        true;
+@enable-hover-media-query:  false; // Deprecated, no longer affects any compiled CSS
+@enable-grid-classes:       true;
+@enable-print-styles:       true;
+
+// Spacing
+//
+// Control the default styling of most Bootstrap elements by modifying these
+// variables. Mostly focused on spacing.
+// You can add more entries to the @spacers map, should you need more variation.
+
+@spacer: 1rem;
+@spacers:
+  0 0,
+  1 (@spacer * 0.25),
+  2 (@spacer * 0.5),
+  3 @spacer,
+  4 (@spacer * 1.5),
+  5 (@spacer * 3);
+
+// This variable affects the `.h-*` and `.w-*` classes.
+@sizes:
+  25 25%,
+  50 50%,
+  75 75%,
+  100 100%,
+  auto auto;
+
+// Body
+//
+// Settings for the `<body>` element.
+
+@body-bg:                   @white;
+@body-color:                @gray-900;
+
+// Links
+//
+// Style anchor elements.
+
+@link-color:                theme-color(primary);
+@link-decoration:           none;
+@link-hover-color:          darken(@link-color, 15%);
+@link-hover-decoration:     underline;
+
+// Paragraphs
+//
+// Style p element.
+
+@paragraph-margin-bottom:   1rem;
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+@line-height-lg:              1.5;
+@line-height-sm:              1.5;
+
+@border-width:                1px;
+@border-color:                @gray-300;
+
+@border-radius:               0.25rem;
+@border-radius-lg:            0.3rem;
+@border-radius-sm:            0.2rem;
+
+@box-shadow-sm:               0 0.125rem 0.25rem fade(@black, 7.5%);
+@box-shadow:                  0 0.5rem 1rem fade(@black, 15%);
+@box-shadow-lg:               0 1rem 3rem fade(@black, 17.5%);
+
+@component-active-color:      @white;
+@component-active-bg:         theme-color(primary);
+
+@caret-width:                 0.3em;
+
+@transition-base:             all 0.2s ease-in-out;
+@transition-fade:             opacity 0.15s linear;
+@transition-collapse:         height 0.35s ease;
+
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
+
+@font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+@font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+@font-family-base:            @font-family-sans-serif;
+
+@font-size-base:              1rem; // Assumes the browser default, typically `16px`
+@font-size-lg:                (@font-size-base * 1.25);
+@font-size-sm:                (@font-size-base * 0.875);
+
+@font-weight-light:           300;
+@font-weight-normal:          400;
+@font-weight-medium:          500;
+@font-weight-semibold:        600;
+@font-weight-bold:            700;
+
+@font-weight-base:            @font-weight-normal;
+@line-height-base:            1.5;
+
+@h1-font-size:                (@font-size-base * 2.5);
+@h2-font-size:                (@font-size-base * 2);
+@h3-font-size:                (@font-size-base * 1.75);
+@h4-font-size:                (@font-size-base * 1.5);
+@h5-font-size:                (@font-size-base * 1.25);
+@h6-font-size:                @font-size-base;
+
+@headings-margin-bottom:      (@spacer / 2);
+@headings-font-family:        inherit;
+@headings-font-weight:        500;
+@headings-line-height:        1.2;
+@headings-color:              inherit;
+
+@display1-size:               6rem;
+@display2-size:               5.5rem;
+@display3-size:               4.5rem;
+@display4-size:               3.5rem;
+
+@display1-weight:             300;
+@display2-weight:             300;
+@display3-weight:             300;
+@display4-weight:             300;
+@display-line-height:         @headings-line-height;
+
+@lead-font-size:              (@font-size-base * 1.25);
+@lead-font-weight:            300;
+
+@small-font-size:             80%;
+
+@text-muted:                  @gray-600;
+
+@blockquote-small-color:      @gray-600;
+@blockquote-font-size:        (@font-size-base * 1.25);
+@enable-blockquote-border:    true;
+@blockquote-border-color:     @gray-lighter;
+@blockquote-border-width:     @border-width * 5;
+
+@hr-border-color:             fade(@black, 10%);
+@hr-border-width:             @border-width;
+
+@mark-padding:                0.2em;
+
+@dt-font-weight:              @font-weight-bold;
+
+@kbd-box-shadow:              inset 0 -0.1rem 0 fade(@black, 25%);
+@nested-kbd-font-weight:      @font-weight-bold;
+
+@list-inline-padding:         0.5rem;
+
+@mark-bg:                     #fcf8e3;
+
+@hr-margin-y:                 @spacer;
+
+// Tables
+//
+// Customizes the `.table` component with basic values, each used across all table variations.
+
+@table-cell-padding:          0.75rem;
+@table-cell-padding-sm:       0.3rem;
+
+@table-bg:                    transparent;
+@table-accent-bg:             fade(@black, 5%);
+@table-hover-bg:              fade(@black, 7.5%);
+@table-active-bg:             @table-hover-bg;
+
+@table-border-width:          @border-width;
+@table-border-color:          @gray-300;
+
+@table-head-bg:               @gray-200;
+@table-head-color:            @gray-700;
+
+@table-dark-bg:               @gray-900;
+@table-dark-accent-bg:        fade(@white, 5%);
+@table-dark-hover-bg:         fade(@white, 7.5%);
+@table-dark-border-color:     lighten(@gray-900, 7.5%);
+@table-dark-color:            @body-bg;
+
+@table-striped-order:         odd;
+
+@table-caption-color:         @text-muted;
+
+// Forms
+
+@label-margin-bottom:                   0.5rem;
+
+// Pagination
+
+@pagination-padding-y:              0.5rem;
+@pagination-padding-x:              0.75rem;
+@pagination-padding-y-sm:           0.25rem;
+@pagination-padding-x-sm:           0.5rem;
+@pagination-padding-y-lg:           0.75rem;
+@pagination-padding-x-lg:           1.5rem;
+@pagination-line-height:            1.25;
+
+@pagination-color:                  @link-color;
+@pagination-bg:                     @white;
+@pagination-border-width:           @border-width;
+@pagination-border-color:           @gray-300;
+
+@pagination-focus-box-shadow:       @input-btn-focus-box-shadow;
+@pagination-focus-outline:          0;
+
+@pagination-hover-color:            @link-hover-color;
+@pagination-hover-bg:               @gray-200;
+@pagination-hover-border-color:     @gray-300;
+
+@pagination-active-color:           @component-active-color;
+@pagination-active-bg:              @component-active-bg;
+@pagination-active-border-color:    @pagination-active-bg;
+
+@pagination-disabled-color:         @gray-600;
+@pagination-disabled-bg:            @white;
+@pagination-disabled-border-color:  @gray-300;
+
+// Code
+
+@code-font-size:                    87.5%;
+@code-color:                        @pink;
+
+@kbd-padding-y:                     0.2rem;
+@kbd-padding-x:                     0.4rem;
+@kbd-font-size:                     @code-font-size;
+@kbd-color:                         @white;
+@kbd-bg:                            @gray-900;
+
+@pre-color:                         @gray-900;
+@pre-scrollable-max-height:         340px;
+
+// other
+@input-btn-focus-width:       0.2rem;
+@input-btn-focus-color:       fade(@component-active-bg, 25%);
+@input-btn-focus-box-shadow:  0 0 0 @input-btn-focus-width @input-btn-focus-color;
+
+// Cards
+
+@card-spacer-y:                     0.75rem;
+@card-spacer-x:                     1.25rem;
+@card-border-width:                 @border-width;
+@card-border-radius:                @border-radius;
+@card-border-color:                 fade(@black, 12.5%);
+@card-inner-border-radius:          ~"calc(@{card-border-radius} - @{card-border-width})";
+@card-cap-bg:                       fade(@black, 3%);
+@card-bg:                           @white;
+
+@card-img-overlay-padding:          1.25rem;
+
+@card-group-margin:                 (@grid-gutter-width / 2);
+@card-deck-margin:                  @card-group-margin;
+
+@card-columns-count:                3;
+@card-columns-gap:                  1.25rem;
+@card-columns-margin:               @card-spacer-y;

@@ -1,0 +1,240 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.sslongchuang.api.grpc";
+option java_outer_classname = "EnergyConsumptionQueryProto";
+option objc_class_prefix = "ECQP";
+package com.sslongchuang.api.grpc;
+
+// 接口定义
+service EnergyConsumptionQueryService {
+    // 能源能耗导出
+    rpc Export (ExportRequest) returns (ExportResult) {
+    }
+    // 能源能耗模板导出
+    rpc Template (TemplateRequest) returns (TemplateResult) {
+    }
+    // 能源能耗树
+    rpc Tree (TreeRequest) returns (TreeResult) {
+    }
+    // 能源能耗分类列表
+    rpc EnergyConsumptionTypeList (EnergyConsumptionTypeListRequest) returns (EnergyConsumptionTypeListResult) {
+    }
+    // 能源能耗分项列表
+    rpc EnergyConsumptionSubitemList (EnergyConsumptionSubitemListRequest) returns (EnergyConsumptionSubitemListResult) {
+    }
+    // 采集功能列表
+    rpc CollectFunctionList (CollectFunctionListRequest) returns (CollectFunctionListResult) {
+    }
+    // 采集功能组列表
+    rpc CollectFunctionGroupList (CollectFunctionGroupListRequest) returns (CollectFunctionGroupListResult) {
+    }
+    // 采集功能组详情
+    rpc CollectFunctionGroupDetail (CollectFunctionGroupDetailRequest) returns (CollectFunctionGroupDetailResult) {
+    }
+    // 采集功能详情
+    rpc CollectFunctionDetail (CollectFunctionDetailRequest) returns (CollectFunctionDetailResult) {
+    }
+    // 分类详情
+    rpc CollectEnergyConsumptionTypeDetail(CollectEnergyConsumptionTypeDetailRequest) returns(CollectEnergyConsumptionTypeDetailResult){}
+}
+// 能源能耗导出请求参数
+message ExportRequest {
+
+}
+// 能源能耗模板导出请求参数
+message TemplateRequest {
+
+}
+// 能源能耗树请求参数
+message TreeRequest {
+}
+// 能源能耗分类列表请求参数
+message EnergyConsumptionTypeListRequest {
+    SortObj sort_obj = 1;
+}
+// 能源能耗分项列表请求参数
+message EnergyConsumptionSubitemListRequest {
+    string parent_subitem_id = 1;
+    SortObj sort_obj = 2;
+    string energy_consumption_type_no = 3;
+}
+// 采集工能列表请求参数
+message CollectFunctionListRequest {
+    int32 page_num = 1;
+    int32 page_size = 2;
+    string energy_consumption_type_no = 3;
+    string search_key = 4;
+    SortObj sort_obj = 5;
+}
+// 采集工能详情请求参数
+message CollectFunctionDetailRequest {
+    int32 collect_function_no = 1;
+    string energy_consumption_type_no = 2;
+}
+// 采集工能组列表请求参数
+message CollectFunctionGroupListRequest {
+    int32 page_num = 1;
+    int32 page_size = 2;
+    string search_key = 3;
+    SortObj sort_obj = 4;
+    string energy_consumption_type_no = 5;
+}
+// 采集工能组功能列表请求参数
+message CollectFunctionGroupFunctionListRequest {
+    string collect_function_group_id = 1;
+    int32 collect_function_no = 2;
+    string energy_consumption_type_no = 3;
+}
+// 采集功能组详情请求参数
+message CollectFunctionGroupDetailRequest {
+    string collect_function_group_id = 1;
+}
+// 分类详情
+message CollectEnergyConsumptionTypeDetailRequest{
+    string energy_consumption_type_no = 1;
+}
+// 能源能耗批量导入响应参数
+message SaveAndUpdateResponse {
+    string data = 1;
+}
+// 能源能耗导出响应参数
+message ExportResult {
+    string file_name = 1;
+    uint32 size = 2;
+    bytes data = 3;
+}
+// 能源能耗模板导出响应参数
+message TemplateResult {
+    string file_name = 1;
+    uint32 size = 2;
+    bytes data = 3;
+}
+// 能源能耗树响应参数
+message TreeResult {
+    repeated TreeTypeModel data = 1;
+}
+// 能源能耗树分类响应参数
+message TreeTypeModel {
+    string energy_consumption_type_no = 1;
+    string type_name = 2;
+    string convert_standard_rate = 3;
+    string unit = 4;
+    string graphic_red_value = 5;
+    string graphic_green_value = 6;
+    string graphic_blue_value = 7;
+    string graphic_alpha = 8;
+    repeated TreeSubitemModel subitem = 9;
+}
+//能源能耗树分项响应参数
+message TreeSubitemModel {
+    string energy_consumption_subitem_id = 1;
+    string energy_consumption_subitem_no = 2;
+    string energy_consumption_type_no = 3;
+    string subitem_name = 4;
+    string parent_subitem_id = 5;
+    string graphic_red_value = 6;
+    string graphic_green_value = 7;
+    string graphic_blue_value = 8;
+    string graphic_alpha = 9;
+    repeated TreeSubitemModel subitem = 10;
+}
+// 能源能耗分类列表响应参数
+message EnergyConsumptionTypeListResult {
+    repeated EnergyConsumptionTypeModel data = 1;
+}
+// 能源能耗批量导入响应参数
+message EnergyConsumptionTypeModel {
+    string energy_consumption_type_no = 1;
+    string type_name = 2;
+    string convert_standard_rate = 3;
+    string unit = 4;
+    string graphic_red_value = 5;
+    string graphic_green_value = 6;
+    string graphic_blue_value = 7;
+    string graphic_alpha = 8;
+}
+// 能源能耗分项列表响应参数
+message EnergyConsumptionSubitemListResult {
+    repeated EnergyConsumptionSubitemModel data = 1;
+}
+// 能源能耗分项列表响应参数
+message EnergyConsumptionSubitemModel {
+    string energy_consumption_subitem_id =1;
+    string energy_consumption_subitem_no = 2;
+    string energy_consumption_type_no = 3;
+    string subitem_name = 4;
+    string parent_subitem_id =5;
+    string graphic_red_value = 6;
+    string graphic_green_value = 7;
+    string graphic_blue_value = 8;
+    string graphic_alpha = 9;
+}
+// 采集功能列表响应参数
+message CollectFunctionListResult {
+    repeated CollectFunctionModel data = 1;
+    int64 total = 2;
+}
+// 采集工能列表响应参数
+message CollectFunctionModel {
+    int32 collect_function_no = 1;
+    string energy_consumption_type_no = 2;
+    string collect_function_name = 3;
+}
+// 采集功能详情响应参数
+message CollectFunctionDetailResult {
+    int32 collect_function_no = 1;
+    string energy_consumption_type_no = 2;
+    string collect_function_name = 3;
+    string energy_consumption_type_name = 4;
+}
+// 采集功能组列表响应参数
+message CollectFunctionGroupListResult {
+    repeated CollectFunctionGroupModel data = 1;
+    int64 total = 2;
+}
+// 采集工能组详情响应参数
+message CollectFunctionGroupModel {
+    string collect_function_group_id = 1;
+    string energy_consumption_type_no = 2;
+    string collect_function_group_name = 3;
+    string collect_function_name_all = 4;
+}
+// 采集功能组功能列表响应参数
+message CollectFunctionGroupFunctionModel {
+    string collect_function_group_id = 1;
+    int32 collect_function_no = 2;
+    string energy_consumption_type_no = 3;
+    string graphic_red_value = 4;
+    string graphic_green_value = 5;
+    string graphic_blue_value = 6;
+    string graphic_alpha = 7;
+}
+// 采集功能组详情响应参数
+message CollectFunctionGroupDetailResult {
+    string collect_function_group_name = 1;
+    repeated CollectFunctionGroupDetailModel data = 2;
+}
+// 采集功能组详情相应参数
+message CollectFunctionGroupDetailModel {
+    string collect_function_name = 1;
+    int32 collect_function_no = 2;
+    string graphic_red_value = 3;
+    string graphic_green_value = 4;
+    string graphic_blue_value = 5;
+    string graphic_alpha = 6;
+}
+
+// 分类详情
+message CollectEnergyConsumptionTypeDetailResult{
+    string energy_consumption_type_no = 1;
+    string energy_consumption_type_name = 2;
+}
+
+// 排序
+message SortObj {
+    // 排序字段
+    string field = 1;
+    // ASC/DESC
+    string order_by = 2;
+}

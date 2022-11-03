@@ -1,0 +1,43 @@
+/*******************************
+    pull-refresh   Overrides
+*******************************/
+
+.om-pull-refresh {
+  user-select: none;
+  overflow: hidden;
+
+  & .track {
+    position: relative;
+  }
+
+  & .head {
+    width: 100%;
+    height: 50px;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    top: -50px;
+    font-size: 14px;
+    color: $gray-dark;
+    line-height: 50px;
+  }
+
+  & .loading {
+    .om-loader {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+    }
+
+    span,
+    .om-loader {
+      vertical-align: middle;
+      display: inline-block;
+    }
+  }
+
+  & .text {
+    display: block;
+  }
+}

@@ -1,0 +1,12 @@
+/*
+  Import this file into your LESS project
+*/
+
+/* Global */
+@import "csscom/common/globals/_functions.less";
+@import "csscom/common/globals/variables.less";
+
+// 如下引用会将site 相关 variables overrides 引入，这些为 site 全局变量
+@type    : 'global';
+@element : 'site';
+@import (multiple) 'theme.config.less';

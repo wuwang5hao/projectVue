@@ -1,0 +1,141 @@
+/****** Statistic ******/
+
+/*******************************
+            Theme
+*******************************/
+
+@type    : 'component';
+@element : 'statistic';
+
+@import (multiple) 'theme.config.less';
+
+/*******************************
+            Statistic
+  ref: https://codepen.io/ssteigen/pen/ALAzgw
+*******************************/
+
+.statistic {
+  margin: 1em 0;
+  text-transform: uppercase;
+  display: inline-block;
+
+  .value {
+    font-size: 4em;
+    line-height: 1em;
+    text-align: center;
+
+    &.text {
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    img {
+      max-height: .8em;
+      vertical-align: baseline;
+    }
+  }
+
+  .label {
+    color: inherit;
+    display: block;
+    font-size: 1em;
+    text-align: center;
+  }
+}
+
+.statistic + .statistic {
+  margin-left: 1.5em;
+}
+
+/*** Horizontal Statistic ***/
+.statistic.horizontal {
+  .value,
+  .label {
+    display: inline;
+    vertical-align: middle;
+  }
+}
+
+/****** Statistic Group ******/
+.statistic-group {
+  margin: 1em 0;
+
+  .statistic {
+    display: inline-block;
+  }
+}
+
+/*** Horizontal Statistic Group ***/
+.statistic-group.horizontal {
+  .statistic {
+    display: block;
+
+    .value,
+    .label {
+      display: inline;
+      vertical-align: middle;
+    }
+  }
+  .statistic + .statistic {
+    margin-left: 0;
+  }
+}
+
+/*** Float Statistics ***/
+.statistic {
+  &.pull-left {
+    margin-right: 1em;
+  }
+  &.pull-right {
+    margin-left: 1em;
+  }
+}
+
+/****** Statistic Sizes ******/
+.statistic {
+  &.mini .value {
+    font-size: 1em;
+    font-weight: bold;
+  }
+  &.tiny .value {
+    font-size: 2em;
+  }
+  &.small .value {
+    font-size: 3em !important;
+  }
+  &.large .value {
+    font-size: 5em;
+  }
+  &.huge .value {
+    font-size: 6em;
+  }
+}
+
+/****** Statistic Types ******/
+.statistic {
+  &.primary {
+    color: @brand-primary;
+  }
+
+  &.success {
+    color: @brand-success;
+  }
+
+  &.info {
+    color: @brand-info;
+  }
+
+  &.warning {
+    color: @brand-warning;
+  }
+
+  &.danger {
+    color: @brand-danger;
+  }
+
+  &.inverted {
+    color: white;
+  }
+}
+
+.loadUIOverrides();

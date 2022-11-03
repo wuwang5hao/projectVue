@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.sslongchuang.api.grpc";
+option java_outer_classname = "EnergyConsumptionCommandProto";
+option objc_class_prefix = "ECCP";
+package com.sslongchuang.api.grpc;
+
+import "google/protobuf/any.proto";
+
+// 接口定义
+service EnergyConsumptionCommandService {
+    // 能源能耗批量导入
+    rpc Upload (SaveAndUpdateRequest) returns (Result) {
+    }
+}
+// 能源能耗批量导入请求参数
+message SaveAndUpdateRequest {
+    // 上传文件，base64格式
+    string data = 1;
+    string name =2;
+}
+
+// 返回类型
+message Result {
+    int32 code = 1;
+    google.protobuf.Any data = 3;
+}
+
+message Template {
+    string message = 1;
+}

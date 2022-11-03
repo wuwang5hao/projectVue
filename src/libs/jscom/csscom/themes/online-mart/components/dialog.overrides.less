@@ -1,0 +1,71 @@
+/*******************************
+    dialog   Overrides
+*******************************/
+
+.om-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  font-size: 16px;
+  overflow: hidden;
+  transition: .2s;
+  border-radius: 4px;
+  background-color: @white;
+  transform: translate3d(-50%, -50%, 0);
+  .mixin-max-wh();
+
+  & > .header {
+    padding: 15px 0 0;
+    text-align: center;
+  }
+
+  & > .content {
+    &::after {
+      border-bottom-width: 1px;
+    }
+  }
+
+  & .message {
+    line-height: 1.5;
+    padding: 15px 20px;
+
+    &-withtitle {
+      color: @gray-dark;
+      font-size: 14px;
+    }
+  }
+
+  & > .footer {
+    overflow: hidden;
+
+    &-buttons {
+      display: flex;
+
+      .om-button {
+        flex: 1;
+      }
+    }
+  }
+
+  .om-button {
+    border: 0;
+  }
+
+  & .confirm {
+    &,
+    &:active {
+      color: #00C000;
+    }
+  }
+
+  &-bounce-enter {
+    opacity: 0;
+    transform: translate3d(-50%, -50%, 0) scale(0.7);
+  }
+
+  &-bounce-leave-active {
+    opacity: 0;
+    transform: translate3d(-50%, -50%, 0) scale(0.9);
+  }
+}

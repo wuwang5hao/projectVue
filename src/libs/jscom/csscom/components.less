@@ -1,0 +1,58 @@
+/*
+  Import this file into your LESS project
+*/
+
+/* Global */
+&{ @import "csscom/common/globals/reset"; }
+// 如上写法可以将变量作用域隔离开来
+// 如下写法会将变量作用域放在全局，并且其他作用域变量优先，但是可以引用到外层作用域
+// 一般来说引用组件必须将变量作用域隔离开，否则 @element 会被 site 文件中的变量覆盖，导致组件overrides不能被加载
+@import "csscom/common/globals/site";
+
+/* Components */
+
+/* bootstrap v3 */
+&{ @import "csscom/common/components/v3/grid"; }
+&{ @import "csscom/common/components/v3/pagination"; }
+
+/* icon */
+&{ @import "csscom/common/components/glyphicon"; }
+
+&{ @import "csscom/common/components/table"; }
+&{ @import "csscom/common/components/form"; }
+&{ @import "csscom/common/components/button"; }
+&{ @import "csscom/common/components/button-group"; }
+
+&{ @import "csscom/common/components/component-animation"; }
+&{ @import "csscom/common/components/dropdown"; }
+&{ @import "csscom/common/components/input-group"; }
+&{ @import "csscom/common/components/nav"; }
+&{ @import "csscom/common/components/navbar"; }
+&{ @import "csscom/common/components/breadcrumb"; }
+&{ @import "csscom/common/components/pager"; }
+&{ @import "csscom/common/components/label"; }
+&{ @import "csscom/common/components/badge"; }
+&{ @import "csscom/common/components/jumbotron"; }
+&{ @import "csscom/common/components/thumbnail"; }  // TODO: merge into v4 image
+&{ @import "csscom/common/components/alert"; }
+&{ @import "csscom/common/components/progress-bar"; }
+&{ @import "csscom/common/components/media"; }
+&{ @import "csscom/common/components/list-group"; }
+&{ @import "csscom/common/components/panel"; }
+&{ @import "csscom/common/components/responsive-embed"; }
+&{ @import "csscom/common/components/well"; }
+&{ @import "csscom/common/components/close"; }
+
+&{ @import "csscom/common/components/modal"; }
+&{ @import "csscom/common/components/tooltip"; }
+&{ @import "csscom/common/components/popover"; }
+&{ @import "csscom/common/components/carousel"; }
+
+/* bootstrap v4 */
+&{ @import "csscom/common/components/v4/grid"; }
+&{ @import "csscom/common/components/v4/pagination"; }
+&{ @import "csscom/common/components/v4/code"; }
+&{ @import "csscom/common/components/v4/_utilities"; }
+&{ @import "csscom/common/components/v4/_card"; }
+
+/* pc widget from iview or other framework */

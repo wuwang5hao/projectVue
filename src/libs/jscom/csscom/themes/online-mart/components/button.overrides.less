@@ -1,0 +1,221 @@
+
+.om-button {
+  position: relative;
+  padding: 0;
+  display: inline-block;
+  height: 44px;
+  line-height: 42px;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 16px;
+  text-align: center;
+  -webkit-appearance: none;
+
+  &::before {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    border: inherit;
+    border-color: @black;
+    background-color: @black;
+    border-radius: inherit;/* inherit parent's border radius */
+    transform: translate(-50%, -50%);
+  }
+
+  &:active::before {
+    opacity: .3;
+  }
+
+  &.unclickable:before {
+    display: none;
+  }
+
+  &-default {
+    color: @button-default-color;
+    background-color: @button-default-background-color;
+    border: 1px solid @button-default-border-color;
+  }
+
+  &-primary {
+    color: @button-primary-color;
+    background-color: @button-primary-background-color;
+    border: 1px solid @button-primary-border-color;
+  }
+
+  &-primary15 {
+    color: @white;
+    background-color: @primary-15;
+    border: 1px solid @primary-15;
+  }
+  &-primary15neg {
+    color: @white;
+    background-color: @primary-15neg;
+    border: 1px solid @primary-15neg;
+  }
+  &-primary30 {
+    color: @white;
+    background-color: @primary-30;
+    border: 1px solid @primary-30;
+  }
+  &-primary30neg {
+    color: @white;
+    background-color: @primary-30neg;
+    border: 1px solid @primary-30neg;
+  }
+
+  &-danger {
+    color: @button-danger-color;
+    background-color: @button-danger-background-color;
+    border: 1px solid @button-danger-border-color;
+  }
+
+  &.success {
+    color: @white;
+    background-color: @success;
+    border: 1px solid @success;
+  }
+  &.error {
+    color: @white;
+    background-color: @error;
+    border: 1px solid @error;
+  }
+  &.caution {
+    color: @white;
+    background-color: @caution;
+    border: 1px solid @caution;
+  }
+
+  &-info {
+    color: @white;
+    background-color: @info;
+    border: 1px solid @info;
+  }
+
+  &-large {
+    width: 100%;
+    height: 50px;
+    line-height: 48px;
+  }
+
+  &-normal {
+    padding: 0 15px;
+    font-size: 14px;
+  }
+
+  &-small {
+    height: 30px;
+    padding: 0 8px;
+    min-width: 60px;
+    font-size: 12px;
+    line-height: 28px;
+  }
+
+  &-loading {
+    .om-loader {
+      display: inline-block;
+    }
+
+    /* & > .text {
+      display: none;
+    } */
+  }
+
+  /* mini图标默认宽度50px，文字不能超过4个 */
+  &-mini {
+    display: inline-block;
+    min-width: 50px;
+    max-width: 70px;
+    height: 22px;
+    line-height: 20px;
+    font-size: @tiny-font-size;
+    padding: 0 2px;
+
+    & + .om-button-mini {
+      margin-left: 5px;
+    }
+  }
+
+  &-block {
+    width: 100%;
+    display: block;
+  }
+
+  &-bottom-action {
+    flex: 1;
+    height: 50px;
+    line-height: 50px;
+    border: 0;
+    border-radius: 0;
+    font-size: 16px;
+    color: @button-bottom-action-default-color;
+    background-color: @button-bottom-action-default-background-color;
+
+    &.om-button-primary {
+      color: white;
+      .primary-gradient();
+    }
+    &.om-button-orange {
+      color: white;
+      .orange-gradient();
+    }
+  }
+
+  &-disabled {
+    color: @button-disabled-color;
+    background-color: @button-disabled-background-color;
+    border: 1px solid @button-disabled-border-color;
+  }
+
+  &-rounded {
+    border-radius: 999em;
+  }
+
+  &-plain {
+    background-color: @white;
+
+    &.om-button-default {
+      color: @button-default-color;
+    }
+
+    &.om-button-primary {
+      color: @button-primary-border-color;
+    }
+
+    &.om-button-primary15 {
+      color: @primary-15;
+    }
+    &.om-button-primary30 {
+      color: @primary-30;
+    }
+    &.om-button-primary15neg {
+      color: @primary-15neg;
+    }
+    &.om-button-primary30neg {
+      color: @primary-30neg;
+    }
+
+    &.om-button-danger {
+      color: @button-danger-border-color;
+    }
+
+    &.om-button-success {
+      color: @success;
+    }
+
+    &.om-button-error {
+      color: @error;
+    }
+
+    &.om-button-caution {
+      color: @caution;
+    }
+
+    &.om-button-info {
+      color: @info;
+    }
+  }
+}

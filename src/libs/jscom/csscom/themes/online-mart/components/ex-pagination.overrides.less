@@ -1,0 +1,17 @@
+
+.om-ex-pagination {
+  .pagination-container {
+    width: 100%;
+    height: 60px;
+    padding: @vertical-padding @horizontal-padding;
+    background-color: @el-bg-color;
+    border-top: 1px solid @gray-light;
+    &-fixed {
+      position: fixed;
+      bottom: 0;
+      z-index: 100;
+      .mixin-max-wh();
+      .mixin-fixed-cl();
+    }
+  }
+}

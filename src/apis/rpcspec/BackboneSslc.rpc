@@ -1,0 +1,2249 @@
+module BackboneSslc {
+struct UserInfo {
+  0 require long id;
+  1 require string name; // 姓名
+  2 require string sex $mock(`random.choice(['1', '2'])`);  // 性别 ‘1’：男 ‘2’：女
+  3 require string mobile; // 手机
+  4 require string email; // 邮箱
+  5 require vector<string> actions; // 权限  [‘sys_role’, ‘sys_user’, ‘data_dictionary’]
+  6 require string status; // 首次登录标示
+  7 require int version; // 版本
+  8 require string dealPassword; // 记住密码
+  9 optional string isLogin; // 是否已登录
+};
+
+interface AuthInterf {
+  @post@path("/base/auth/v1/login")
+  void login(
+    string account,
+    string password,
+    string rememberPassword,
+
+    out UserInfo userInfo
+  );
+
+  @post@path("/base/auth/v1/confirm_replace_login")
+  void confirm_replace_login(
+    string account,
+    string password,
+    string rememberPassword,
+
+    out UserInfo userInfo
+  );
+
+  @post@path("/base/auth/v1/first_modify_password")
+  void first_modify_password(
+    long id,
+    string newPassword,
+    string confirmPassword,
+    int version,
+
+    out UserInfo userInfo
+  );
+
+  @post@path("/base/auth/v1/logout")
+  void logout(
+    long id,
+    string mobile,
+    string name,
+  );
+
+  @post@path("/base/auth/v1/get_personal_detail/{id}")
+  void get_personal_detail(
+    out UserInfo userInfo
+  );
+
+  @post@path("/base/auth/v1/modify_password")
+  void modify_password(
+    long id,
+    string password,
+    string newPassword,
+    string confirmPassword,
+  );
+};
+
+struct TodoItem {
+  0 require long id;
+  1 require string businessType; // 01：待审核 02：待指派
+  2 require string targetUrl;
+  3 require string content;
+  4 require string enterpriseId;
+};
+
+struct IndustryItem {
+  0 require string industryName;
+  1 require string industryCount;
+};
+
+struct SoftwareItem {
+  0 require string serviceNo;
+  1 require string serviceName;
+  2 require string moduleNo;
+  3 require string moduleName;
+  4 require string softwareTotalCount;
+  5 require string softwarePercent;
+};
+
+struct HardwareItem {
+  0 require string hardwareSeriesNo;
+  1 require string hardwareSeriesName;
+  2 require string hardwareProductNo;
+  3 require string hardwareProductName;
+  4 require string hardwareTotalCount;
+  5 require string hardwarePercent;
+};
+
+interface HomeInterf {
+  @get@path("/base/home/v1/totality_statistics")
+  void totality_statistics(
+    out string enterpriseTotalCount,
+    out string softwareTotalCount,
+    out string hardwareTotalCount
+  );
+
+  @get@path("/base/home/v1/todo_list_list?userId={id}")
+  void todo_list(
+    out int todoTotal,
+    out int todoAssign,
+    out int todoExamine,
+    out vector<TodoItem> todoList
+  );
+
+  @get@path("/base/home/v1/industry_proportion")
+  void industry_proportion(
+    out int enterpriseTotalCount,
+    out vector<IndustryItem> industryCollection
+  );
+
+  @get@path("/base/home/v1/software_product_sales_proportion")
+  void software_product_sales_proportion(
+    out int orderSoftwareTotalCount,
+    out vector<SoftwareItem> orderSoftwareList
+  );
+
+  @get@path("/base/home/v1/hardware_product_sales_proportion")
+  void hardware_product_sales_proportion(
+    out int orderHardwareTotalCount,
+    out vector<HardwareItem> orderHardwareList
+  );
+};
+
+struct PageIn {
+  0 require int pageNum;
+  1 require int pageSize;
+};
+
+struct Page {
+  0 require long total;
+  1 require int pageNum;
+  2 require int pageSize;
+};
+
+struct RoleDetail {
+  0 optional long id;
+  1 require string roleName;
+  2 optional int version;
+  3 require string description;
+  4 require vector<string> auths;
+};
+
+struct RoleInfo {
+  0 require long id;
+  1 require string roleName;
+  2 require int version;
+};
+
+struct RoleCate {
+  0 require long id;
+  1 require string type;
+  2 require string typeSon;
+  3 require string auth;
+  4 require string name;
+};
+
+struct RoleName {
+  0 require long id;
+  1 require string name;
+};
+
+// (基干) 角色管理
+interface RoleInterf {
+  // 角色一览
+  @get@path("/base/role/v1/roles")
+  void get_roles(
+    string roleName,
+    out **Page,
+    out vector<RoleInfo> list
+  );
+
+  // 角色详情
+  @get@path("/base/role/v1/roles/{p_id}")
+  void get_role(
+    long id,
+    out **RoleDetail
+  );
+
+  // 角色添加
+  @post@path("/base/role/v1/roles")
+  void create_role(
+    **RoleDetail,
+    out **RoleDetail
+  );
+
+  // 角色编辑
+  @put@path("/base/role/v1/roles/{p_id}")
+  void update_role(
+    **RoleDetail,
+    out **RoleDetail
+  );
+
+  // 角色删除
+  @delete@path("/base/role/v1/roles/{p_id}")
+  void delete_role(
+    long id,
+    int version
+  );
+
+  // 权限组取得
+  @get@path("/base/role/v1/get_role_actions")
+  void get_role_actions(
+    out vector<RoleCate> list,
+  );
+
+  // 全角色取得
+  @get@path("/base/role/v1/get_all_roles")
+  void get_all_roles(
+    out vector<RoleName> list,
+  );
+};
+
+// 用户接口
+struct SortObject {
+  0 require string field;
+  1 require string orderBy;
+};
+
+struct UserInfoT {
+  0 require long id;
+  1 require string account;
+  2 require string name;
+  3 require string sex;
+  4 require string mobile;
+  5 require string email;
+  6 require string status;
+  7 require int version;
+  8 require vector<RoleName> roleList;
+};
+
+struct UserDetail {
+  0 optional long id;
+  1 optional string account;
+  2 require string name;
+  3 require string sex;
+  4 require string mobile;
+  5 require string email;
+  6 require string description;
+  7 optional int version;
+  8 optional string status;
+  9 require vector<long> roleIdList;
+  10 optional vector<string> roleNameList;
+};
+
+struct AdminUser {
+  0 require long id;
+  1 require string name;
+  2 require string mobile;
+  3 optional string email;
+};
+
+interface UserInterf {
+  // 用户一览
+  @get@path("/base/admin_user/v1/admin_users")
+  void get_users(
+    string adminuserKey,
+    long roleId,
+    string status,
+    SortObject sortObj,
+
+    out **Page,
+    out vector<UserInfoT> list,
+  );
+
+  // 用户详细取得
+  @get@path("/base/admin_user/v1/admin_users/{p_id}")
+  void get_user_detail(
+    long id,
+    out **UserDetail,
+  );
+
+  // 用户添加
+  @post@path("/base/admin_user/v1/admin_users")
+  void create_user(
+    **UserDetail,
+    out **UserDetail,
+  );
+
+  // 用户编辑
+  @put@path("/base/admin_user/v1/admin_users/{p_id}")
+  void update_user(
+    **UserDetail,
+    out **UserDetail,
+  );
+
+  // 用户删除
+  @delete@path("/base/admin_user/v1/admin_users/{p_id}")
+  void delete_user(
+    long id,
+    int version,
+  );
+
+  // 密码重置
+  @patch@path("/base/admin_user/v1/reset_password/{p_id}")
+  void reset_password(
+    long id,
+    int version,
+  );
+
+  // 用户启用
+  @patch@path("/base/admin_user/v1/activate_user/{p_id}")
+  void activate_user(
+    long id,
+    int version,
+  );
+
+  // 用户冻结
+  @patch@path("/base/admin_user/v1/lock_user/{p_id}")
+  void lock_user(
+    long id,
+    int version,
+  );
+
+  // 导入平台用户信息
+  @post@path("/base/admin_user/v1/lead_in_admin_user")
+  void lead_in_admin_user(
+    string excelFile,  // TODO: File excelFile
+  );
+
+  // 根据工作职责取得用户集合
+  // 销售经理: customer_sales, 客户经理: customer_manager
+  @get@path("/base/admin_user/v1/get_user_by_auth/{auth}")
+  void get_user_by_auth(
+    out vector<AdminUser> adminUserList,
+  );
+
+  // 根据角色取得用户集合
+  @get@path("/base/admin_user/v1/get_user_by_role/{role_id}")
+  void get_user_by_role(
+    out vector<AdminUser> adminUserList
+  );
+
+  // 根据用户名或手机号取得用户集合
+  @get@path("/base/admin_user/v1/get_user_by_name_or_mobile")
+  void get_user_by_name_or_mobile(
+    string name,
+    string mobile,
+
+    out vector<AdminUser> adminUserList,
+  );
+
+  // 取得基干用户信息(邮件调用使用)
+  // 01: 运营 02: 管理员
+  @get@path("/base/admin_user/v1/get_admin_users_by_role/{role_object}")
+  vector<AdminUser> get_admin_users_by_role();
+
+};
+
+// 数据字典管理
+
+struct DictInfo {
+  0 require long id;
+  1 require string typeCode;
+  2 require string typeName;
+  3 require string code;
+  4 require string keyValue;
+  5 require string codeName;
+  6 optional string description;
+  7 require string parentCode;
+  8 optional string parentCodeName;
+  9 require int version;
+};
+
+struct DictDetailU {
+  0 require long id;
+  1 require string typeCode;
+  2 require string typeName;
+  3 require string code;
+  4 require string keyValue;
+  5 optional string codeName;
+  6 require string description;
+  7 optional string parentCode;
+  8 optional string parentCodeName;
+  9 require int version;
+};
+
+struct TypeCode {
+  0 require long id;
+  1 require string typeCode;
+  2 require string typeName;
+};
+
+struct DictCode {
+  0 require long id;
+  1 require string code;
+  2 require string keyValue;
+  3 require string name;
+};
+
+struct DictCodeTree {
+  0 require long id;
+  1 require string code;
+  2 require string keyValue;
+  3 require string name;
+  // use DictCode replace DictCodeTree to remove circle mock
+  4 require vector<DictCode> list;
+};
+
+interface DictInterf {
+  // 数据字典一览取得
+  @get@path("/base/dictionary/v1/dictionaries")
+  void get_dict_list(
+    string typeCode,
+    string dictionaryKey,
+    SortObject sortObj,
+    **PageIn,
+
+    out **Page,
+    out vector<DictInfo> list,
+  );
+
+  // 数据字典详情取得
+  @get@path("/base/dictionary/v1/dictionaries/{id}")
+  void get_dict_detail(
+    out **DictDetailU,
+  );
+
+  // 数据字典添加
+  @post@path("/base/dictionary/v1/dictionaries")
+  void create_dict(
+    string typeCode,
+    string typeName,
+    string code,
+    string keyValue,
+    string parentCode,
+    string description,
+  );
+
+  // 数据字典编辑
+  @put@path("/base/dictionary/v1/dictionaries/{p_id}")
+  void update_dict(
+    **DictDetailU
+  );
+
+  // 数据字典删除
+  @delete@path("/base/dictionary/v1/dictionaries/{p_id}")
+  void delete_dict(
+    long id,
+    int version,
+  );
+
+  // 取得全部类型编码
+  @get@path("/base/dictionary/v1/get_all_type_code_list")
+  void get_all_type_code_list(
+    out vector<TypeCode> typeCodeList,
+  );
+
+  // 取得全部编码（去重）
+  @get@path("/base/dictionary/v1/get_all_code_list")
+  void get_all_code_list(
+    out vector<DictCode> dictionaryCodeList,
+  );
+
+  // 根据指定的类型编码，取得对应的编码集
+  @get@path("/base/dictionary/v1/get_code_list/{typeCode}")
+  void get_code_list_by_code(
+    out vector<DictCodeTree> list,
+  );
+};
+
+struct AreaBasic {
+  0 require long id;
+  1 require string areaCode;
+  2 require string areaName;
+};
+
+struct Area {
+  0 require long id;
+  1 require string areaCode;
+  2 require string areaName;
+  3 require string parentAreaCode;
+  4 require string parentAreaName;
+};
+
+struct AreaTree {
+  0 require long id;
+  1 require string areaCode;
+  2 require string areaName;
+  3 require string parentAreaCode;
+  4 require string parentAreaName;
+  5 require vector<Area> areaTree;
+};
+
+struct AreaInfo {
+  0 require long id;
+  1 require string areaCode;
+  2 require string areaName;
+  3 require string areaLevel;
+  4 require string parentAreaCode;
+  5 require string parentAreaName;
+  6 require int version;
+};
+
+struct AreaDetailU {
+  0 require long id;
+  1 require string areaCode;
+  2 require string areaName;
+  3 require string areaLevel;
+  4 optional string districtNo;
+  5 optional string parentCityCode;
+  6 optional string parentCityName;
+  7 optional string parentProvinceCode;
+  8 optional string parentProvinceName;
+  9 require string description;
+  10 require int version;
+};
+
+struct CreateAreaIn {
+  0 require string areaName;
+  1 require string areaLevel;
+  2 optional string districtNo;
+  3 optional string parentCityCode;
+  4 optional string parentProvinceCode;
+  5 optional string description;
+};
+
+// 地区管理
+interface AreaInterf {
+  // 地区树形结构取得
+  @get@path("/base/area/v1/area_tree")
+  void get_area_tree(
+    out long id,
+    out string name,
+    out vector<AreaTree> areaTree,
+  );
+
+  // 地区一览取得
+  @get@path("/base/area/v1/areas")
+  void get_areas(
+    long id,
+    SortObject sortObj,
+
+    out **Page,
+    out vector<AreaInfo> list,
+  );
+
+  // 地区详细取得
+  @get@path("/base/area/v1/areas/{id}")
+  void get_area_detail(
+    out **AreaDetailU,
+  );
+
+  // 地区添加
+  @post@path("/base/area/v1/areas")
+  void create_area(
+    **CreateAreaIn
+  );
+
+  // 地区编辑
+  @put@path("/base/area/v1/areas/{p_id}")
+  void update_area(
+    **AreaDetailU,
+    out ** AreaDetailU,
+  );
+
+  // 地区删除
+  @delete@path("/base/area/v1/areas/{p_id}")
+  void delete_area(
+    long id,
+    int version,
+  );
+
+  // 全省取得
+  @get@path("/base/area/v1/get_all_province_list")
+  void get_all_province_list(
+    out vector<AreaBasic> provinceList,
+  );
+
+  // 省旗下市取得
+  @get@path("/base/area/v1/get_city_list_by_province/{parent_area_code}")
+  void get_city_list_by_province(
+    out vector<AreaBasic> cityList,
+  );
+
+  // 市旗下区取得
+  @get@path("/base/area/v1/get_area_list_by_city/{parent_area_code}")
+  void get_area_list_by_city(
+    out vector<AreaBasic> areaList,
+  );
+};
+
+struct SoftwareService {
+  0 require long id;
+  1 require string serviceNo;
+  2 require string serviceName;
+  3 require string indexUrl;
+  4 require int moduleCounts;
+  5 require string upShelfStatus;  // 0:待上架; 1:已上架; 2:已下架
+  6 require string status;  // ‘0’：待发布; ‘1’：已发布
+  7 require long publisher;
+  8 require string publisherName;
+  9 require long updater;
+  10 require string updateName;
+  11 require Date updateTime;
+  12 require int version;
+  13 require string firstPublishFlag;
+  14 optional string description;
+};
+
+struct ServiceOptionItem {
+  0 require long id;
+  1 require string serviceNo;
+  2 require string serviceName;
+};
+
+struct ModuleOptionItem {
+  0 require long id;
+  1 require string moduleNo;
+  2 require string moduleName;
+};
+
+struct ServiceModuleOptionItem {
+  0 require long serviceId;
+  1 require string serviceNo;
+  2 require string serviceName;
+  4 require long moduleId;
+  5 require string moduleNo;
+  6 require string moduleName;
+};
+
+struct SoftwareStructure {
+  0 require long id;
+  1 require string serviceNo;
+  2 require string serviceName;
+  3 require vector<ModuleOptionItem> serviceModules;
+};
+
+// 软件服务管理
+interface SoftwareServiceInterf {
+  @get@path("/base/software_service/v1/software_services")
+  void software_services(
+    string serviceKey,
+    string upShelfStatus,
+    string status,
+    SortObject sortObj,
+
+    out **Page,
+    out vector<SoftwareService> list
+  );
+
+  @get@path("/base/software_service/v1/software_services/{id}")
+  void get_software_service_detail(
+    out **SoftwareService
+  );
+
+  @post@path("/base/software_service/v1/software_services")
+  void add_software_service(
+    string serviceNo,
+    string serviceName,
+    string indexUrl,
+    string description,
+    out long id,
+    out string serviceNo,
+    out string serviceName,
+    out string indexUrl,
+    out string description
+  );
+
+  @put@path("/base/software_service/v1/software_services/{p_id}")
+  void edit_software_service(
+    long id,
+    string serviceNo,
+    string serviceName,
+    string indexUrl,
+    string description,
+    int version,
+    out long id,
+    out string serviceNo,
+    out string serviceName,
+    out string indexUrl,
+    out string description
+  );
+
+  @delete@path("/base/software_services/v1/software_services/{p_id}")
+  void delete_software_service(
+    long id,
+    int version
+  );
+
+  @patch@path("/base/software_service/v1/up_shelf/{p_id}")
+  void upShelf_software_service(
+    long id,
+    int version
+  );
+
+  @patch@path("/base/software_service/v1/down_shelf/{p_id}")
+  void downShelf_software_service(
+    long id,
+    int version
+  );
+
+  @get@path("/base/software_service/v1/get_software_service_option_list")
+  void get_software_service_option_list(
+    out vector<ServiceOptionItem> serviceList
+  );
+
+  @get@path("/base/software_service_module/v1/get_software_service_module_option_list/{id}")
+  void get_software_service_module_option_list(
+    out vector<ModuleOptionItem> moduleList
+  );
+
+  @get@path("/base/software_service_module/v1/get_software_service_module_option_list_by_no")
+  void get_software_service_module_option_list_by_no(
+    string serviceNo,
+    out vector<ModuleOptionItem> moduleList
+  );
+
+  @get@path("/base/software_feature_authority/v1/get_software_service_and_module_option_lists")
+  void get_software_service_and_module_option_list(
+    out vector<ServiceModuleOptionItem> serviceList
+  );
+
+  @get@path("/base/software_structure/v1/order_software_structure")
+  void get_order_software_structure(
+    string orderSoftwareType,
+    long enterpriseId,
+
+    out vector<SoftwareStructure> services
+  );
+};
+
+struct SoftwareServiceModule {
+  0 require long id;
+  1 require string moduleNo;
+  2 require string moduleName;
+  3 require long serviceId;
+  4 require string serviceNo;
+  5 require string serviceName;
+  6 require string upShelfStatus;
+  7 require string status;
+  8 require long publisher;
+  9 require string publisherName;
+  10 require Date publishTime;
+  11 require long updater;
+  12 require string updateName;
+  13 require Date updateTime;
+  14 require int version;
+  15 require string firstPublishFlag;
+};
+
+struct SoftwareServiceModuleDetail {
+  0 require long id;
+  1 require string moduleNo;
+  2 require string moduleName;
+  3 require long serviceId;
+  4 require string serviceNo;
+  5 require string serviceName;
+  6 require long moduleCost;
+  7 require int moduleAccounts;
+  8 require long moduleLogo;
+  9 require string upShelfStatus;
+  10 require string status;
+  11 require string appId;
+  12 require string secretKey;
+  13 require int version;
+  14 require string firstPublishFlag;
+};
+
+// 软件服务模块管理
+interface softwareServiceModuleInterf {
+  @get@path("/base/software_service_module/v1/software_service_modules")
+  void softare_service_modules(
+    long serviceId,
+    string moduleKey,
+    string upShelfStatus,
+    string status,
+    SortObject sortObj,
+
+    out **Page,
+    out vector<SoftwareServiceModule> list
+  );
+
+  @get@path("/base/software_service_module/v1/software_service_modules/{id}")
+  void get_software_service_module_detail(
+    out **SoftwareServiceModuleDetail
+  );
+
+  @get@path("/base/software_service_module/v1/software_service_modules/get_detail_by_no/{moduleNo}")
+  void get_software_service_module_detail_by_no(
+    out **SoftwareServiceModuleDetail
+  );
+
+  @post@path("/base/file/v1/upload_brand_logo")
+  void upload_brand_logo(
+    string moduleLogoFile, // todo logoFile
+    out long fileId
+  );
+
+  @post@path("/base/software_service_module/v1/software_service_modules")
+  void add_software_service_module(
+    long serviceId,
+    string moduleName,
+    long moduleCost,
+    int moduleAccounts,
+    long moduleLogo,
+    string appId,
+    string secretKey,
+    string description,
+
+    out long id,
+    out long serviceId,
+    out string moduleNo,
+    out string moduleName,
+    out long moduleCost,
+    out int moduleAccounts,
+    out long moduleLogo,
+    out string description,
+  );
+
+  @put@path("/base/software_service_module/v1/software_service_modules/{p_id}")
+  void edit_software_service_module(
+    long id,
+    long serviceId,
+    string moduleName,
+    long moduleCost,
+    int moduleAccounts,
+    long moduleLogo,
+    string appId,
+    string secretKey,
+    string description,
+    int version,
+
+    out long id,
+    out long serviceId,
+    out string moduleNo,
+    out string moduleName,
+    out long moduleCost,
+    out int moduleAccounts,
+    out long moduleLogo,
+    out string description,
+  );
+
+  @delete@path("/base/software_service_module/v1/software_service_modules/{p_id}")
+  void delete_software_service_module(
+    long id,
+    int version
+  );
+
+  @patch@path("/base/software_service_module/v1/up_shelf/{p_id}")
+  void upShelf_software_service_module(
+    long id,
+    int version
+  );
+
+  @patch@path("/base/software_service_module/v1/down_shelf/{p_id}")
+  void downShelf_software_service_module(
+    long id,
+    int version
+  );
+};
+
+struct SoftwareModuleFeature {
+  0 require long id;
+  1 require long serviceId;
+  2 require long serviceModuleId;
+  3 require string serviceName;
+  4 require string moduleNo;
+  5 require string moduleName;
+  6 require string functionNo;
+  8 require string functionName;
+  9 require int sequenceIndex;
+  10 require string status;
+  11 require long publisher;
+  12 require string publisherName;
+  13 require Date publishTime;
+  14 require long updater;
+  15 require string updateName;
+  16 require long updateTime;
+  17 require int version;
+  18 require string firstPublishFlag;
+};
+
+struct FeatureAuthorityItem {
+  0 require long id;
+  1 require string authorityNo;
+  2 require string authorityName;
+};
+
+struct FeatureItem {
+  0 require long id;
+  1 require string functionNo;
+  2 require string functionName;
+};
+
+// 软件模块功能
+interface SoftwareModuleFeatureInterf {
+  @get@path("/base/software_module_feature/v1/software_module_features")
+  void software_module_features(
+    long serviceId,
+    long serviceModuleId,
+    string functionKey,
+    string status,
+    SortObject sortObj,
+
+    out **Page,
+    out vector<SoftwareModuleFeature> list
+  );
+
+  @get@path("/base/software_module_feature/v1/software_module_features/{id}")
+  void get_software_module_feature_detail(
+    out **SoftwareModuleFeature
+  );
+
+  @post@path("/base/software_module_feature/v1/software_module_features")
+  void add_software_module_feature(
+    long serviceId,
+    long serviceModuleId,
+    int sequenceIndex,
+    string functionName,
+    string description,
+
+    out long id,
+    out long serviceId,
+    out long serviceModuleId,
+    out string description
+  );
+
+  @put@path("/base/software_module_feature/v1/software_module_features/{p_id}")
+  void edit_software_module_feature(
+    long id,
+    long serviceId,
+    long serviceModuleId,
+    int sequenceIndex,
+    string functionName,
+    string description,
+    int version,
+
+    out long id,
+    out long serviceId,
+    out long serviceModuleId,
+    out string description
+  );
+
+  @delete@path("/base/software_module_feature/v1/software_module_features/{p_id}")
+  void delete_software_module_feature(
+    long id,
+    int version
+  );
+
+  @get@path("/base/software_module_feature/v1/get_feature_authorities")
+  void get_feature_authorities(
+    long moduleFunctionId,
+
+    out vector<FeatureAuthorityItem> featureAuthorityList
+  );
+
+  @get@path("/base/software_module_feature/v1/get_software_module_feature_authorities")
+  void get_module_feature_authorities(
+    long serviceId,
+    long serviceModuleId,
+    out vector<FeatureAuthorityItem> authorityList
+  );
+
+  @post@path("/base/software_module_feature/v1/set_software_module_feature_authorities")
+  void set_module_feature_authorities(
+    long moduleFunctionId,
+    vector<long> authoritys
+  );
+
+  @get@path("/base/software_module_feature/v1/get_software_module_feature_option_list_by_service_module_id/{service_module_no}")
+  void get_feature_option_list(
+    string serviceModuleNo,
+    out vector<FeatureItem> featureList
+  );
+};
+
+struct AuthorityItem {
+  0 require long id;
+  1 require string authorityNo;
+  2 require string authorityName;
+  3 require string terminalType;
+  4 require int sequenceIndex;
+  5 require string status;
+  6 require string updateName;
+  7 require Date updateTime;
+  8 require string publisherName;
+  9 require Date publishTime;
+  10 require long updater;
+  11 require string updateName;
+  12 require Date updateTime;
+  13 require int version;
+  14 require string firstPublishFlag;
+};
+
+struct SubModuleItem {
+  0 require long serviceId;
+  1 require long serviceModuleId;
+  2 require string serviceName;
+  1 require string moduleName;
+};
+
+struct FeatureAuthorityDetail {
+  0 require long id;
+  1 require string serviceNo;
+  2 require string serviceName;
+  3 require string moduleNo;
+  4 require string moduleName;
+  5 require string authorityNo;
+  6 require string authorityName;
+  7 require string terminalType;
+  8 require string visitUrl;
+  9 require string visitWay;
+  10 require int sequenceIndex;
+  11 require vector<SubModuleItem> subordinateList;
+  12 require string customerAdminFlg;
+  13 require string status;
+  14 require string description;
+  15 require int version;
+  16 require vector<FeatureItem> functionList;
+  17 require long publisher;
+  18 require string publisherName;
+  19 require Date publishTime;
+  20 require string firstPublishFlag;
+};
+
+struct OutSubModuleItem {
+  0 require long serviceId;
+  1 require string serviceName;
+  2 require long serviceModuleId;
+  3 require string serviceModuleName;
+};
+
+struct FeatureAuthorityIn {
+  1 require string authorityName;
+  2 require string terminalType;
+  3 require string visitUrl;
+  4 require int sequenceIndex;
+  5 require vector<SubModuleItem> subordinateList;
+  6 require string description;
+  7 require vector<FeatureItem> functionList;
+};
+
+struct FeatureAuthority {
+  0 require long id;
+  5 require string authorityNo;
+  6 require string authorityName;
+  7 require string terminalType;
+  8 require string visitUrl;
+  9 require string visitWay;
+  10 require int sequenceIndex;
+  11 require vector<OutSubModuleItem> subordinateList;
+  12 require string customerAdminFlg;
+  14 require string description;
+  15 require int version;
+};
+
+interface AuthorityInterf {
+  @get@path("/base/software_feature_authority/v1/software_feature_authorities")
+  void software_feature_authorities(
+    long serviceId,
+    long serviceModuleId,
+    string terminalType,
+    string authorityKey,
+    string status,
+    SortObject sortObj,
+
+    out **Page,
+    out vector<AuthorityItem> list
+  );
+
+  @get@path("/base/software_feature_authority/v1/software_feature_authorities/{p_id}")
+  void get_software_feature_authority_detail(
+    long id,
+    out **FeatureAuthorityDetail
+  );
+
+  @post@path("/base/software_feature_authority/v1/software_feature_authorities")
+  void add_software_feature_authority(
+    **FeatureAuthorityIn,
+    out **FeatureAuthority
+  );
+
+  @put@path("/base/software_feature_authority/v1/software_feature_authorities/{p_id}")
+  void edit_software_feature_authority(
+    long id,
+    **FeatureAuthorityIn,
+
+    out **FeatureAuthority
+  );
+
+  @delete@path("/base/software_feature_authority/v1/software_feature_authorities/{p_id}")
+  void delete_software_feature_authority(
+    long id,
+    int version
+  );
+
+  @get@path("/base/software_feature_authority/v1/get_software_service_mf_option_list/{service_module_id}")
+  void get_software_service_module_function_option_list(
+    long serviceModuleId,
+    out vector<FeatureItem> functionList
+  );
+};
+
+struct SslcService {
+  0 require int id;
+  1 require string serveName;
+  2 require string upShelfStatus;
+  3 require string htmlUrl;
+  4 require int sortIdex;
+  5 require string status;
+  6 require string updateName;
+  7 require Date updateTime;
+  8 require string firstPublishFlag;
+  9 require int version;
+  10 require string description;
+};
+
+// 龙创服务
+interface SslcServiceInterf {
+  @get@path("/base/longchuang_service/v1/longchuang_services")
+  void get_longchuang_services(
+    string serveName,
+    string upShelfStatus,
+    string status,
+    SortObject sortObj,
+    out **Page,
+    out vector<SslcService> list
+  );
+
+  @get@path("/base/longchuang_service/v1/longchuang_services/{id}")
+  void get_longchuang_service_detail(
+    out **SslcService
+  );
+
+  @post@path("/base/longchuang_service/v1/longchuang_services")
+  void add_longchuang_service(
+    string serveName,
+    string htmlUrl,
+    string sortIndex,
+    string status,
+    string description,
+
+    out int id,
+    out string serveName,
+    out string htmlUrl,
+    out int sortIndex,
+    out string description
+  );
+
+  @put@path("/base/longchuang_service/v1/longchuang_services/{p_id}")
+  void edit_longchuang_service(
+    long id,
+    string serveName,
+    string htmlUrl,
+    string sortIndex,
+    string status,
+    string description,
+    string version,
+
+    out int id,
+    out string serveName,
+    out string htmlUrl,
+    out int sortIndex,
+    out string description
+  );
+
+  @delete@path("/base/longchuang_service/v1/longchuang_services/{p_id}")
+  void delete_longchuang_service(
+    long id,
+    int version
+  );
+
+  @patch@path("/base/longchuang_service/v1/up_shelf/{p_id}")
+  void upShelf_longchuang_service(
+    long id,
+    int version
+  );
+
+  @patch@path("/base/longchuang_service/v1/down_shelf/{p_id}")
+  void downShelf_longchuang_service(
+    long id,
+    int version
+  );
+};
+
+// # 硬件管理
+
+struct BrandInfo {
+  0 require long id;
+  1 require string brandName;
+  2 require string upShelfStatus $mock(`random.choice(['0', '1'])`);
+  3 require string updateTime;
+  4 require string updateName;
+  5 require string status $mock(`random.choice(['0', '1'])`);
+  6 require int version;
+  7 require string firstPublishFlag $mock(`random.choice(['0', '1'])`);
+};
+
+struct Series {
+  0 require long id;
+  1 require string brandName;
+  2 require string seriesNo;
+  3 require string seriesName;
+  4 require string upShelfStatus $mock(`random.choice(['0', '1'])`);
+  5 require string status $mock(`random.choice(['0', '1'])`);
+  6 require string updateName;
+  7 require string updateTime;
+  8 require int version;
+  9 require string firstPublishFlag $mock(`random.choice(['0', '1'])`);
+};
+
+struct SeriesId {
+  0 require long id;
+};
+
+struct SeriesDetail {
+  0 require long id;
+  1 require long brandId;
+  2 require string brandName;
+  3 require string seriesNo;
+  4 require string seriesName;
+  5 require string upShelfStatus $mock(`random.choice(['0', '1'])`);
+  6 require string status $mock(`random.choice(['0', '1'])`);
+  7 require string description;
+  8 require int version;
+  9 require string firstPublishFlag $mock(`random.choice(['0', '1'])`);
+};
+
+struct ProductInfo {
+  0 require long id;
+  1 require long seriesId;
+  2 require string seriesNo;
+  3 require string seriesName;
+  4 require string productNo;
+  5 require string productName;
+  6 require string upShelfStatus;
+  7 require string status;
+  8 require string updateName;
+  9 require string updateTime $mock(`past_date()`);  // Date
+  10 require int version;
+  11 require string firstPublishFlag $mock(`random.choice(['0', '1'])`);
+};
+
+struct ProductDetail {
+  0 require long id;
+  1 require long brandId;
+  2 require long seriesId;
+  3 require string seriesName;
+  4 require string productNo;
+  5 require string productName;
+  6 require string downloadFormat;
+  7 require string aliyunFlag;
+  8 require string productUniqueFlag;
+  9 require string upShelfStatus;
+  10 require string status;
+  11 require string description;
+  12 require int version;
+  13 require string firstPublishFlag;
+};
+
+struct ModelInfo {
+  0 require long id;
+  1 require long productId;
+  2 require string productName;
+  3 require string modelNo;
+  4 require string modelName;
+  5 require string price;  // BigDecimal
+  6 require string upShelfStatus $mock(`random.choice(['0', '1'])`);
+  7 require string status $mock(`random.choice(['0', '1'])`);
+  8 require string updateName;
+  9 require string updateTime $mock(`past_date()`);  // Date
+  10 require int version;
+  11 require string firstPublishFlag;
+};
+
+struct Channel {
+  0 optional long id;
+  1 require string channelCode;
+  2 require string channelKeyValue;
+  3 require string name;
+  4 require string knxFlag;
+  5 require int maxConnection;
+  6 require string outNetFlag;
+};
+
+struct Protocl {
+  0 require string id;
+  1 require string protoclName;
+};
+
+struct ModelDetail {
+  0 require long id;
+  1 require long brandId;
+  2 require long productId;
+  3 require long seriesId;
+  4 require string productName;
+  5 require string modelNo;
+  6 require string modelName;
+  7 require string orderNumber;
+  8 require vector<Channel> channelList;
+  9 require string price;  // BigDecimal
+  10 require int maxDotsNum;
+  11 require int frameIntervalMin;
+  12 require int frameIntervalMax;
+  13 require vector<Protocl> protocls;
+  14 require long modelPicture;
+  15 require string label1;
+  16 require long modelPicture2;
+  17 require string label2;
+  18 require long modelPicture3;
+  19 require string label3;
+  20 require long modelPicture4;
+  21 require string label4;
+  22 require long modelPicture5;
+  23 require string label5;
+  24 require long datum1;
+  25 require long datum2;
+  26 require long datum3;
+  27 require long datum4;
+  28 require long datum5;
+  29 require string description;
+  30 require int version;
+  31 require string firstPublishFlag $mock(`random.choice(['0', '1'])`);
+};
+
+struct ModelDetailCU {
+  0 optional long id;  // create optional
+  1 require long productId;
+  2 require string modelNo;
+  3 require string modelName;
+  4 require string orderNumber;
+  5 require vector<Channel> channelList;
+
+  6 require string price;  // BigDecimal
+  7 require int maxDotsNum;
+  8 require int frameIntervalMin;
+  9 require int frameIntervalMax;
+  10 require vector<long> protocls;
+
+  11 optional long modelPicture;
+  12 optional string label1;
+  13 optional long modelPicture2;
+  14 optional string label2;
+  15 optional long modelPicture3;
+  16 optional string label3;
+  17 optional long modelPicture4;
+  18 optional string label4;
+  19 optional long modelPicture5;
+  20 optional string label5;
+
+  21 optional long datum1;
+  22 optional long datum2;
+  23 optional long datum3;
+  24 optional long datum4;
+  25 optional long datum5;
+  26 optional string status;
+  27 optional string description;
+  28 optional int version;  // create optional
+};
+
+struct FirmwareInfo {
+  0 require long id;
+  1 require string modelName;
+  2 require string firmwareName;
+  3 require string upShelfStatus $mock(`random.choice(['1', '2'])`);
+  4 require string updateTime $mock(`past_date()`);  // Date
+  5 require string updateName;
+  6 require string status $mock(`random.choice(['1', '2'])`);
+  7 require int version;
+  8 require string firstPublishFlag;
+};
+
+struct FirmwareDetail {
+  0 require long id;
+  0 require string productName;
+  0 require string modelName;
+  0 require string firmwareName;
+  0 require string downloadUrl;
+  0 require vector<long> compatibleFirmware;
+  0 require string reissueFlag;
+  0 require string description;
+  0 require string firstPublishFlag;
+};
+
+// 选项获取结构
+struct BrandName {
+  0 require long id;
+  1 require string brandName;
+};
+
+struct SeriesName {
+  0 require long id;
+  1 require string seriesName;
+};
+
+struct SeriesName2 {
+  0 require long seriesId;
+  1 require string seriesName;
+};
+
+struct SeriesOption {
+  0 require long brandId;
+  1 require string brandName;
+  2 require vector<SeriesName2> seriesList;
+};
+
+struct ProductName {
+  0 require long id;
+  2 require string productName;
+};
+
+struct ProductNoName {
+  0 require long id;
+  1 require string productNo;
+  2 require string productName;
+};
+
+struct ProductOption {
+  0 require long brandId;
+  1 require string brandName;
+  2 require vector<SeriesOption> seriesList;
+};
+
+struct ModelOption {
+  0 require long modelId;
+  1 require string modelName;
+};
+
+struct ProductOption2 {
+  0 require long productId;
+  1 require string productName;
+  2 require vector<ModelOption> modelList;
+};
+
+struct SeriesOption2 {
+  0 require long seriesId;
+  1 require string seriesName;
+  2 require vector<ProductOption2> productList;
+};
+
+struct BrandOption {
+  0 require long brandId;
+  1 require string brandName;
+  2 require vector<SeriesOption2> seriesList;
+};
+
+struct ModelNoName {
+  0 require long id;
+  1 require string modelNo;
+  2 require string modelName;
+};
+
+struct FirmwareName {
+  0 require long id;
+  1 require string firmwareName;
+};
+
+struct ProtoclName {
+  0 require long id;
+  1 require string protoclName;
+};
+
+struct ModelName {
+  0 require long id;
+  1 require string modelName;
+};
+
+struct SerialInfo {
+  0 require string serialNo;
+  1 require long brandId;
+  2 require string brandName;
+  3 require long seriesId;
+  4 require string seriesNo;
+  5 require string seriesName;
+  6 require long productId;
+  7 require string productNo;
+  8 require string productName;
+  9 require long modelId;
+  10 require string modelNo;
+  11 require string modelName;
+  12 require int accounts;
+  13 require string createTime;  // Date
+};
+
+struct MacSerial {
+  0 require string macAddress;
+  1 require string serialNo;
+  2 require string hardwareStatus;
+};
+
+interface HardwareInterf {
+  // 硬件品牌
+  @get@path("/base/hardware_brand/v1/hardware_brand")
+  void get_brand_list(
+    string brandName,
+    string upShelfStatus,
+    string status,
+    SortObject sortObj,
+    **PageIn,
+
+    out **Page,
+    out vector<BrandInfo> list,
+  );
+
+  // 硬件品牌添加
+  @post@path("/base/hardware_brand/v1/hardware_brand")
+  void create_brand(
+    string brandName,
+    long brandLogo,
+    string description,
+  );
+
+  // 硬件品牌编辑
+  @put@path("/base/hardware_brand/v1/hardware_brand/{p_id}")
+  void update_brand(
+    long id,
+    string brandName,
+    long brandLogo,
+    string description,
+    int version,
+  );
+
+  // 上传品牌Logo
+  @post@path("/base/file/v1/upload_hardware_brand_logo")
+  void upload_brand_logo(
+    string brandLogoFile,  // TODO: File
+    string xxx,
+    out long fileId,
+  );
+
+  // 硬件品牌详情
+  @get@path("/base/hardware_brand/v1/hardware_brand/{id}")
+  void get_brand_detail(
+    out long id,
+    out string brandName,
+    out long brandLogo,
+    out string description,
+    out string firstPublishFlag $mock(`random.choice(['0', '1'])`),
+  );
+
+  // 硬件品牌上架
+  @patch@path("/base/hardware_brand/v1/up_shelf/{p_id}")
+  void up_shelf_brand(
+    long id,
+    int version,
+  );
+
+  // 硬件品牌下架
+  @patch@path("/base/hardware_brand/v1/down_shelf/{p_id}")
+  void down_shelf_brand(
+    long id,
+    int version,
+  );
+
+  // 硬件品牌删除
+  @delete@path("/base/hardware_brand/v1/hardware_brand/{p_id}")
+  void delete_brand(
+    long id,
+    int version,
+  );
+
+  // ## 硬件系列管理
+
+  // 硬件系列一览取得
+  @get@path("/base/hardware_series/v1/hardware_series")
+  void get_series_list(
+    string seriesKey,
+    long brandId,
+    string upShelfStatus,
+    string status,
+    SortObject sortObj,
+    **PageIn,
+
+    out **Page,
+    out vector<Series> list,
+  );
+
+  // 硬件系列详情取得
+  @get@path("/base/hardware_series/v1/hardware_series/{id}")
+  void get_series_detail(
+    out **SeriesDetail,
+  );
+
+  // 硬件系列添加
+  @post@path("/base/hardware_series/v1/hardware_series")
+  void create_series(
+    long brandId,
+    string seriesNo,
+    string seriesName,
+    string status,
+    string description,
+  );
+
+  // 硬件系列编辑
+  @put@path("/base/hardware_series/v1/hardware_series/{p_id}")
+  void update_series(
+    long id,
+    long brandId,
+    string seriesNo,
+    string seriesName,
+    string status,
+    string description,
+    int version,
+  );
+
+  // 硬件系列上架
+  @patch@path("/base/hardware_series/v1/up_shelf/{p_id}")
+  void up_shelf_series(
+    long id,
+    int version,
+  );
+
+  // 硬件系列下架
+  @patch@path("/base/hardware_series/v1/down_shelf/{p_id}")
+  void down_shelf_series(
+    long id,
+    int version,
+  );
+
+  // 硬件系列删除
+  @delete@path("/base/hardware_series/v1/hardware_series/{p_id}")
+  void delete_series(
+    long id,
+    int version,
+  );
+
+  // ## 硬件产品管理
+  // 硬件产品一览
+  @get@path("/base/hardware_product/v1/hardware_products")
+  void get_product_list(
+    long seriesId,
+    string productKey,
+    long brandId,
+    string upShelfStatus,
+    string status,
+    SortObject sortObj,
+    **PageIn,
+
+    out **Page,
+    out vector<ProductInfo> list,
+  );
+
+  // 硬件产品详情取得
+  @get@path("/base/hardware_product/v1/hardware_products/{id}")
+  void get_product_detail(
+    out **ProductDetail,
+  );
+
+  // 硬件产品添加
+  @post@path("/base/hardware_product/v1/hardware_products")
+  void create_product(
+    long seriesId,
+    string productNo,
+    string productName,
+    string downloadFormat,
+    string aliyunFlag,
+    string productUniqueFlag,
+    string status,
+    string description,
+  );
+
+  // 硬件产品编辑
+  @put@path("/base/hardware_product/v1/hardware_product/{p_id}")
+  void update_product(
+    long id,
+    long seriesId,
+    string productNo,
+    string productName,
+    string downloadFormat,
+    string aliyunFlag,
+    string productUniqueFlag,
+    string status,
+    string description,
+    int version,
+  );
+
+  // 硬件产品上架
+  @patch@path("/base/hardware_product/v1/up_shelf/{p_id}")
+  void up_shelf_product(
+    long id,
+    int version,
+  );
+
+  // 硬件产品下架
+  @patch@path("/base/hardware_product/v1/down_shelf/{p_id}")
+  void down_shelf_product(
+    long id,
+    int version,
+  );
+
+  // 硬件产品删除
+  @delete@path("/base/hardware_product/v1/hardware_products/{p_id}")
+  void delete_product(
+    long id,
+    int version,
+  );
+
+  // ## 硬件型号管理
+  // 硬件型号一览
+  @get@path("/base/hardware_model/v1/hardware_models")
+  void get_model_list(
+    long brandId,
+    long seriesId,
+    long productId,
+    string modelKey,
+    string upShelfStatus,
+    string status,
+    SortObject sortObj,
+    **PageIn,
+
+    out **Page,
+    out vector<ModelInfo> list,
+  );
+
+  // 硬件型号详情取得
+  @get@path("/base/hardware_model/v1/hardware_models/{id}")
+  void get_model_detail(
+    out **ModelDetail,
+  );
+
+  // 硬件型号详情取得（根据编号取得）
+  @get@path("/base/hardware_model/v1/hardware_models/get_detail_by_no/{modelNo}")
+  void get_detail_by_no(
+    out **ModelDetail,
+  );
+
+  // 硬件型号添加
+  @post@path("/base/hardware_model/v1/hardware_models")
+  void create_model(
+    **ModelDetailCU,
+  );
+
+  // 硬件型号编辑
+  @put@path("/base/hardware_model/v1/hardware_models/{p_id}")
+  void update_model(
+    **ModelDetailCU,
+  );
+
+  // 硬件型号上架
+  @patch@path("/base/hardware_model/v1/up_shelf/{p_id}")
+  void up_shelf_model(
+    long id,
+    int version,
+  );
+
+  // 硬件型号下架
+  @patch@path("/base/hardware_model/v1/down_shelf/{p_id}")
+  void down_shelf_model(
+    long id,
+    int version,
+  );
+
+  // 硬件型号删除
+  @delete@path("/base/hardware_model/v1/hardware_models/{p_id}")
+  void delete_model(
+    long id,
+    int version,
+  );
+
+  // 上传图片
+  @post@path("/base/file/v1/upload_hardware_model_picture")
+  void upload_hardware_model_picture(
+    string hardwareModelPictureFile,  // File
+    string xxx,
+    out long fileId,
+  );
+
+  // 上传资料
+  @post@path("/base/file/v1/upload_document_attachment")
+  void upload_document_attachment(
+    string documentFile,  // File
+    string xxx,
+    out long fileId,
+  );
+
+  // 如下接口暂不封装
+  // 【part3用】硬件型号集合取得
+  // 【part3用】硬件型号信息取得
+  // 【part3用】硬件型号对应的通道配置集合取得
+
+  // 硬件固件管理
+  @get@path("/base/hardware_firmwares/v1/hardware_firmwares")
+  void get_firmware_list(
+    long brandId,
+    long seriesId,
+    long productId,
+    long modelId,
+    string upShelfStatus,
+    string status,
+    string firmwareName,
+    SortObject sortObj,
+    **PageIn,
+
+    out **Page,
+    out vector<FirmwareInfo> list,
+  );
+
+  // 硬件固件详情取得
+  @get@path("/base/hardware_firmwares/v1/hardware_firmwares/{id}")
+  void get_firmware_detail(
+    out **FirmwareDetail,
+  );
+
+  // 硬件固件添加
+  @post@path("/base/hardware_firmwares/v1/hardware_firmwares")
+  void create_firmware(
+    long brandId,
+    long seriesId,
+    long productId,
+    long modelId,
+    string firmwareName,
+    string downloadUrl,
+    vector<long> compatibleFirmware,
+    string reissueFlag,
+    string description,
+  );
+
+  // 硬件固件编辑
+  @put@path("/base/hardware_firmwares/v1/hardware_firmwares/{p_id}")
+  void update_firmware(
+    long id,
+    long brandId,
+    long seriesId,
+    long productId,
+    long modelId,
+    string firmwareName,
+    string downloadUrl,
+    vector<long> compatibleFirmware,
+    string reissueFlag,
+    string description,
+    int version,
+  );
+
+  // 硬件固件上架
+  @patch@path("/base/hardware_firmwares/v1/up_shelf/{p_id}")
+  void up_shelf_firmware(
+    long id,
+    int version,
+  );
+
+  // 硬件固件删除
+  @delete@path("/base/hardware_firmwares/v1/hardware_firmwares/{p_id}")
+  void delete_firmware(
+    long id,
+    int version,
+  );
+
+  // ## 硬件管理相关选择列表取得
+  // 硬件品牌选择列表取得
+  @get@path("/base/hardware_series/v1/get_hardware_brand_option_list")
+  void get_hardware_brand_option_list(
+    out vector<BrandName> brandList,
+  );
+
+  // 硬件系列选择列表取得
+  @get@path("/base/hardware_series/v1/get_hardware_series_option_list")
+  void get_hardware_series_option_list(
+    long brandId,
+    out vector<SeriesId> seriesList,
+  );
+
+  // 硬件系列选择列表取得（全部）
+  @get@path("/base/hardware_series/v1/get_hardware_series_all_option_list")
+  void get_hardware_series_all_option_list(
+    out vector<SeriesOption> brandList,
+  );
+
+  // 硬件产品选择列表取得（全部）
+  @get@path("/base/hardware_product/v1/get_hardware_product_all_option_list")
+  void get_hardware_product_all_option_list(
+    out vector<ProductOption> brandList,
+  );
+
+  // 硬件产品选择列表取得
+  @get@path("/base/hardware_product/v1/get_hardware_product_option_list")
+  void get_hardware_product_option_list(
+    long seriesId,
+    out vector<ProductNoName> productList,
+  );
+
+  // 硬件型号选择列表取得（全部）
+  @get@path("/base/hardware_model/v1/get_hardware_model_all_option_list")
+  void get_hardware_model_all_option_list(
+    out vector<BrandOption> brandList,
+  );
+
+  // 硬件型号选择列表取得
+  @get@path("/base/hardware_model/v1/get_hardware_model_option_list")
+  void get_hardware_model_option_list(
+    long productId,
+    out vector<ModelNoName> modelList,
+  );
+
+  // 硬件产品选择列表取得（根据系列编号取得）
+  @get@path("/base/hardware_product/v1/get_hardware_product_option_list_by_no")
+  void get_hardware_product_option_list_by_no(
+    string seriesNo=undefined,
+    out vector<ProductNoName> productList,
+  );
+
+  // 硬件型号选择列表取得（根据产品编号取得）
+  @get@path("/base/hardware_model/v1/get_hardware_model_option_list_by_no")
+  void get_hardware_model_option_list_by_no(
+    string productNo,
+    out vector<ModelNoName> modelList,
+  );
+
+  // 硬件兼容固件选择列表取得
+  @get@path("/base/hardware_firmwares/v1/get_compatible_firmware")
+  void get_compatible_firmware(
+    long brandId,
+    long seriesId,
+    long productId,
+    long modelId,
+    long firmwareId=undefined,
+    out vector<FirmwareName> firmwareList,
+  );
+
+  // 硬件型号规约驱动选择列表取得
+  @get@path("/base/hardware_model/v1/get_protocls")
+  void get_protocls(
+    out vector<ProtoclName> protoclList,
+  );
+
+  // 硬件产品选择列表取得（三级联动）（发布表数据）
+  @get@path("/base/hardware_serial_number_library/v1/get_hardware_product_publish_all_option_list")
+  void get_hardware_product_publish_all_option_list(
+    out vector<BrandOption> brandList,
+  );
+
+  // 硬件型号选择列表取得（根据硬件产品主键取得）（发布表数据）
+  @get@path("/base/hardware_serial_number_library/v1/get_hardware_model_publish_option_list")
+  void get_hardware_model_publish_option_list(
+    long productId,
+    out vector<ModelOption> modelList,
+  );
+
+  // 硬件序列号库中品牌选择列表取得
+  @get@path("/base/hardware_serial_number_library/v1/get_hardware_serial_brand_option_list")
+  void get_hardware_serial_brand_option_list(
+    out vector<BrandName> brandList,
+  );
+
+  // 硬件序列号库中系列选择列表取得
+  @get@path("/base/hardware_serial_number_library/v1/get_hardware_serial_series_option_list")
+  void get_hardware_serial_series_option_list(
+    long brandId,
+    out vector<SeriesName> seriesList,
+  );
+
+  // 硬件序列号库中产品选择列表取得
+  @get@path("/base/hardware_serial_number_library/v1/get_hardware_serial_product_option_list")
+  void get_hardware_serial_product_option_list(
+    long seriesId,
+    out vector<ProductName> productList,
+  );
+
+  // 硬件序列号库中型号选择列表取得
+  @get@path("/base/hardware_serial_number_library/v1/get_hardware_serial_model_option_list")
+  void get_hardware_serial_model_option_list(
+    long productId,
+    out vector<ModelName> modelList,
+  );
+
+  // # 硬件序列号库管理
+  // 硬件序列号库一览取得 查询/重置/排序
+  @get@path("/base/hardware_serial_number_library/v1/hardware_serial_number_libraries")
+  void get_serial_list(
+    long brandId,
+    long seriesId,
+    long productId,
+    long modelId,
+    string createDateFrom,  // Date
+    string createDateTo,  // Date
+    SortObject sortObj,
+    **PageIn,
+
+    out **Page,
+    out vector<SerialInfo> list,
+    out int version,
+  );
+
+  // 硬件序列号库详情取得
+  @get@path("/base/hardware_serial_number_library/v1/hardware_serial_number_libraries/detail")
+  void get_serial_detail(
+    long brandId,
+    string brandName,
+    long seriesId,
+    string seriesName,
+    long productId,
+    string productName,
+    long modelId,
+    string modelName,
+    string createTime,  // Date
+    out **Page,
+    out vector<MacSerial> list,
+  );
+
+  // 硬件序列号库生成
+  @post@path("/base/hardware_serial_number_library/v1/generate_serial_number")
+  void generate_serial_number(
+    long brandId,
+    long seriesId,
+    long productId,
+    long modelId,
+    vector<string> macAddressList,
+    string generateStyle,
+    string useFlg,
+    string hardwareStatus,
+
+    out long brandId,
+    out string brandName,
+    out long modelId,
+    out string modelName,
+    out long productId,
+    out string productName,
+    out long seriesId,
+    out string seriesName,
+    out string createTime,  // Date
+    out string fileName,
+    out string message,
+    out vector<string> errormacList,
+  );
+
+  // 硬件序列号pdf文件下载
+  @get@path("/base/hardware_serial_number_library/v1/download_pdf")
+  void download_pdf(
+    long brandId,
+    string brandName,
+    long seriesId,
+    string seriesName,
+    long productId,
+    string productName,
+    long modelId,
+    string modelName,
+    string createTime,
+
+    out string file,
+    out string fileName,
+  );
+
+  // 校验mac地址是否重复
+  @get@path("/base/hardware_serial_number_library/v1/check_repeat")
+  void check_repeat(
+    vector<string> macList,
+  );
+
+  // NOTE: 未封装
+  // 【part3用】根据硬件序列号取得硬件型号信息
+};
+
+struct ProtocolInfo {
+  0 require long id;
+  1 require string protocolCode;
+  2 require string protocolName;
+  3 require int channelType;
+  4 require string upShelfStatus;
+  5 require string updateTime;  // Date
+  6 require string status;
+  7 require int version;
+  8 require string firstPublishFlag;
+};
+
+struct ProtocolDetail {
+  0 require long id;
+  1 require string protocolCode;
+  2 require string protocolName;
+  3 require int channelType;
+  4 require string upShelfStatus;
+  5 require string status;
+  6 require string description;
+  7 require int version;
+  8 require string firstPublishFlag;
+
+};
+
+// 规约驱动配置管理
+interface ProtocolInterf {
+  // 规约驱动一览取得 查询/重置/排序
+  @get@path("/base/protocol_setting/v1/protocol_settings")
+  void get_protocol_list(
+    string protocolKey,
+    string channelType,
+    string upShelfStatus,
+    string status,
+    SortObject sortObj,
+    **PageIn,
+
+    out **Page,
+    out vector<ProtocolInfo> list,
+  );
+
+  // 规约驱动详情取得
+  @get@path("/base/protocol_setting/v1/protocol_settings/{id}")
+  void get_protocol_detail(
+    out **ProtocolDetail,
+  );
+
+  // 规约驱动添加
+  @post@path("/base/protocol_setting/v1/protocol_settings")
+  void create_protocol(
+    string protocolCode,
+    string protocolName,
+    string channelType,
+    string description,
+  );
+
+  // 规约驱动编辑
+  @put@path("/base/protocol_setting/v1/protocol_settings/{p_id}")
+  void update_protocol(
+    long id,
+    string protocolCode,
+    string protocolName,
+    string channelType,
+    string description,
+    int version,
+  );
+
+  // 规约驱动删除
+  @delete@path("/base/protocol_setting/v1/protocol_settings/{id}")
+  void delete_protocol(
+    int version,
+  );
+
+  // 规约驱动复制
+  @post@path("/base/protocol_setting/v1/protocol_settings_copy")
+  void copy_protocol(
+    string id,
+    string copyType,
+    string protocolCode,
+    string protocolName,
+    string channelType,
+    string description,
+  );
+
+  // 规约驱动上架
+  @patch@path("/base/protocol_setting/v1/up_shelf/{id}")
+  void up_shelf_protocol(
+    int version,
+  );
+
+  // 规约驱动下架
+  @patch@path("/base/protocol_setting/v1/down_shelf/{id}")
+  void down_shelf_protocol(
+    int version,
+  );
+
+};
+
+// # 库存管理
+
+struct InventoryInfo {
+  0 require long brandId;
+  1 require string brandName;
+  2 require long seriesId;
+  3 require string seriesNo;
+  4 require string seriesName;
+  5 require long productId;
+  6 require string productNo;
+  7 require string productName;
+  8 require long modelId;
+  9 require string modelNo;
+  10 require string modelName;
+  11 require string serialNo;
+  12 require string macAddress;
+  13 require string factoryTime;  // Date
+  14 require string inputTime;  // Date
+  15 require string outputTime;  // Date
+  16 require string ioWarehouseStatus;
+  17 require int version;
+};
+
+struct InventoryDetail {
+  0 require long brandId;
+  1 require string brandName;
+  2 require long seriesId;
+  3 require string seriesName;
+  4 require long productId;
+  5 require string productName;
+  6 require long modelId;
+  7 require string modelName;
+  8 require string macAddress;
+  9 require string serialNo;
+  10 require string factoryTime;  // Date
+  11 require string inputTime;  // Date
+  12 require string outputTime;  // Date
+};
+
+struct SerialNo {
+  0 require string serialNo;
+  1 require int version;
+};
+
+interface InventoryInterf {
+  // 硬件入出库一览取得
+  @get@path("/base/hardware_inventory/v1/hardware_inventories")
+  void get_inventory_list(
+    long brandId,
+    long seriesId,
+    long productId,
+    long modelId,
+    string serialNo,
+    string macAddress,
+    string factoryDateFrom,  // Date
+    string factoryDateTo,  // Date
+    string ioWarehouseStatus,
+    SortObject sortObj,
+    **PageIn,
+
+    out **Page,
+    out vector<InventoryInfo> list
+  );
+
+  // 硬件入出库详情
+  @get@path("/base/hardware_inventory/v1/ hardware_inventories/{id}")
+  void get_inventory_detail(
+    long brandId,
+    out **InventoryDetail,
+  );
+
+  // 硬件入库
+  @patch@path("/base/hardware_inventory/v1/stock_In/{serial_no}")
+  void stock_in(
+    string serialNo,
+    string inputTime,  // Date
+    int version,
+  );
+
+  // 硬件批量入库
+  @post@path("/base/hardware_inventory/v1/stock_in_batch")
+  void stock_in_batch(
+    vector<SerialNo> list,
+    string inputTime,  // Date
+  );
+
+  // 硬件出库
+  @patch@path("/base/hardware_inventory/v1/stock_out/{serial_no}")
+  void stock_out(
+    string serialNo,
+    string outputTime,  // Date
+    int version,
+  );
+
+  // 硬件批量出库
+  @post@path("/base/hardware_inventory/v1/stock_out_batch")
+  void stock_out_batch(
+    vector<SerialNo> list,
+    string outputTime,  // Date
+  );
+};
+
+};

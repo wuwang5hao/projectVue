@@ -1,0 +1,52 @@
+/*******************************
+    swipe   Overrides
+*******************************/
+
+.om-swipe {
+  overflow: hidden;
+  position: relative;
+  user-select: none;
+
+  &-item {
+    float: left;
+    height: 100%;
+  }
+
+  & .track {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  & .indicators {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    height: @om-swipe-indicator;
+    transform: translate3d(-50%, 0, 0);
+
+    &-vertical {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      width: @om-swipe-indicator;
+      transform: translate3d(0, -50%, 0);
+    }
+  }
+
+  & .indicator {
+    border-radius: 100%;
+    vertical-align: top;
+    display: inline-block;
+    background-color: @gray-dark;
+    width: @om-swipe-indicator;
+    height: @om-swipe-indicator;
+
+    &:not(:last-child) {
+      margin-right: @om-swipe-indicator;
+    }
+
+    &-active {
+      background-color: @orange;
+    }
+  }
+}

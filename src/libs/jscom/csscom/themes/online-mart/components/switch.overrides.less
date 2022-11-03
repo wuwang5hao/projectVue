@@ -1,0 +1,47 @@
+/*******************************
+    switch   Overrides
+*******************************/
+
+.om-switch {
+  height: 0.8em;
+  width: 1.3em;
+  display: inline-block;
+  position: relative;
+  background: @grey20;
+  border-radius: 16px;
+  box-sizing: content-box;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 1em;
+
+  & > .node {
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 0.8em;
+    height: 0.8em;
+    transition: .3s;
+    position: absolute;
+    border-radius: 100%;
+    background-color: @white;
+    box-shadow: 0 3px 1px 0 rgba(0, 0, 0, .05), 0 2px 2px 0 rgba(0, 0, 0, .1), 0 3px 3px 0 rgba(0, 0, 0, .05);
+  }
+
+  & .loading {
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+  }
+
+  &-on {
+    background-color: @green;
+
+    .node {
+      transform: translateX(.6em);
+    }
+  }
+
+  &-disabled {
+    opacity: .4;
+  }
+}

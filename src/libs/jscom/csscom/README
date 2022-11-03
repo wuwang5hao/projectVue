@@ -1,0 +1,39 @@
+# csscom 使用方法
+这里有必要解释整个csscom的结构,以避免过度的引用导致编译时间增加,编译结果
+
+* csscom 整体组织结构来自于 semanticui 的组织结构，但是内部团队倾向于使用bs 的命名规范因此将bs 样式融合
+* csscom 整体结构支持多样式（多站点），基础 css(csscom/comn) 适用于所有响应式样式跨设备跨屏幕
+* 在基础样式的基础上，分为多个themes，如 online-mart 是适用于移动端商城的样式
+* 整个bs less 语法的组织结构严格上分为两大类型的功能文件
+  * 不产生任何css代码的功能文件
+    * _functions.less 向 less 中注入插件，类似于 less 中的自定义 function 用于增强语法描述
+    * mixins.less less 语法层的mixin 可重用代码片段
+    * variables.less 公共的变量声明，如颜色系列、宽度高度、间隔等
+  * 产生 css 代码的功能文件
+    * reset.less 重置整个浏览器的 css，包括基础 tag 样式，box-sizing 方式等
+    * site.less 不同站点的一些整体变量以及全局 css，对于颜色或者布局变化区别比较少的情况下多站点配置使用
+    * components.less 包含了n多控件的 css 描述，结合控件层使用
+
+## 如何引入
+### main.js 中引入所需 components（如果想拆分到vue文件需要自行定制）
+ * 一般引入 csscom/components.less 即可（online-mart 有 om.components.less），这个文件做了如下操作：
+    * 引入 reset.less site.less，将整个站点的样式从全局做设定
+    * 接下来可以引用所有 components 相应的css样式文件
+### 每个 vue 的 style 片段中只引入 variables.less 即可
+  * 其中包含的文件（_functions.less，variables.less）均不会导致生成 css文件，因此没有编译输出负担
+### 每个 vue 如果mixin，按需引入 mixins.less
+  * mixin.less 不会导致生成 css文件，因此没有编译输出负担
+
+## 书写规范（以主题为 online-mart 为例）
+* 所有的 variables, mixins 写入 xxx.variables，所有生成样式的代码写入xxx.overrides
+  * theme系统会先自动引入 xxx.variables，然后再引入 base类的样式如 site.less，然后再通过 loadUIOverrides 引入 xxx.overrides
+* 全局 style
+  * theme 全局的style 写入 themes/online-mart/globals/site.variables OR site.overrides
+  * site 全局 style 写入 misapp/globals/site.variables OR site.overrides
+* 组件 style
+  * 基础样式写入 mobile/components/xxx.less
+  * theme 样式改写 themes/online-mart/components/xxx.variables or xxx.overrides
+
+* 其他自定义组件（如jsapp/jspc中会定制一些公共组件）
+  * 引入 csscom/variables.less，其中主要引入系统全部 variables 以及 mixins 以及 site 相关的全局 variables
+  * 然后在 xxx.vue style 中写具体的样式

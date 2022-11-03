@@ -1,0 +1,156 @@
+/*******************************
+         Theme Overrides
+*******************************/
+.om-icon-button {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 4px;
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+  .icon {
+    position: relative;
+    i {
+      font-size: 24px;
+      margin-bottom: 2px;
+    }
+    .dot {
+      &::after {
+        top: calc(50% - 16px);
+        right: calc(50% - 18px);
+        width: 8px;
+        height: 8px;
+        content: " ";
+        position: absolute;
+        border-radius: 999em;
+        background-color: @red;
+      }
+    }
+    .infotext {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 16px;
+      position: absolute;
+      top: calc(50% - 16px);
+      right: calc(50% - 24px);
+      color: white;
+      background: @red;
+      border-radius: 999em;
+      padding: 1px 4px;
+      font-size: 12px;
+    }
+  }
+  .text {
+    margin-top: 2px;
+    width: 100%;
+    text-align: center;
+  }
+  &-grey {
+    color: @grey40;
+    i {
+      color: @grey60;
+    }
+  }
+  &-white {
+    color: @white;
+    i {
+      color: @white;
+    }
+  }
+  &-blue {
+    color: @blue;
+    i {
+      color: @blue;
+    }
+  }
+  &-green {
+    color: @green;
+    i {
+      color: @green;
+    }
+  }
+  &-red {
+    color: @red;
+    i {
+      color: @red;
+    }
+  }
+  &-purple {
+    color: @purple;
+    i {
+      color: @purple;
+    }
+  }
+
+  &-error {
+    color: @error;
+    i {
+      color: @error;
+    }
+  }
+  &-success {
+    color: @success;
+    i {
+      color: @success;
+    }
+  }
+  &-info {
+    color: @info;
+    i {
+      color: @info;
+    }
+  }
+  &-caution {
+    color: @caution;
+    i {
+      color: @caution;
+    }
+  }
+
+  &-active {
+    color: @primary;
+    i {
+      color: @primary;
+    }
+  }
+
+  &-right {
+    text-align: right;
+  }
+  &-left {
+    text-align: left;
+  }
+
+  .icon-image {
+    width: 24px;
+    height: 24px;
+    border-radius: 999em;
+    &-big {
+      width: 32px;
+      height: 32px;
+    }
+    &-huge {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  &-horizontal {
+    flex-direction: row;
+    .icon .om-icon {
+      font-size: 18px;
+      margin-right: 2px;
+    }
+    .icon .icon-image {
+      width: 16px;
+      height: 16px;
+      margin-right: 2px;
+    }
+  }
+}

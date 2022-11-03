@@ -1,0 +1,80 @@
+/*******************************
+    field   Overrides
+*******************************/
+.om-field {
+  .title {
+    max-width: @om-field-title-max-width;
+  }
+
+  .value {
+    position: relative;
+  }
+
+  & .control {
+    border: 0;
+    padding: 0;
+    display: block;
+    width: 100%;
+    resize: none;
+    box-sizing: border-box;
+
+    &-input-right {
+      text-align: right;
+    }
+
+    &:disabled {
+      opacity: 1;
+      color: @gray-darker;
+      background-color: transparent;
+    }
+  }
+
+  & .icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    padding: @om-field-padding 0 @om-field-padding @om-field-padding;
+    transform: translate3d(0, -50%, 0);
+
+    .om-icon {
+      display: block;
+    }
+  }
+
+  & .button {
+    padding-left: @om-field-padding;
+  }
+
+  & .error-message {
+    color: @red;
+    font-size: @om-field-error-font-size;
+    text-align: left;
+  }
+
+  &-disabled {
+    & .control {
+      color: @gray-dark;
+    }
+  }
+
+  &-error {
+    & .control {
+      &,
+      &::placeholder {
+        color: @red;
+      }
+    }
+  }
+
+  &-min-height {
+    & .control {
+      min-height: @om-field-control-min-height;
+    }
+  }
+
+  &-has-icon {
+    & .control {
+      padding-right: @om-field-padding-right;
+    }
+  }
+}

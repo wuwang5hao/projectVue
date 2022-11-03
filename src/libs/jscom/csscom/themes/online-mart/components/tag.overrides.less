@@ -1,0 +1,70 @@
+/*******************************
+    tag   Overrides
+*******************************/
+.om-tag {
+  display: inline-block;
+  line-height: 1.1em;
+  padding: 1px 4px;
+  font-size: @tiny-font-size;
+  background: @gray;
+  color: @white;
+
+  &::after {
+    border-color: currentColor;
+  }
+
+  &-mark {
+    padding-right: 7px;
+    border-radius: 0 8px 8px 0;
+
+    &::after {
+      border-radius: 0 16px 16px 0;
+    }
+  }
+
+  &-round {
+    &::after {
+      border-radius: 8px;
+    }
+  }
+
+  &-medium {
+    font-size: @small-font-size;
+    padding: 2px 5px;
+    line-height: 1.3em;
+  }
+
+  &-large {
+    font-size: @normal-font-size;
+    padding: 2px 5px;
+    line-height: 1.5em;
+  }
+
+  &-success {
+    background: @green;
+
+    &.om-tag-plain {
+      color: @green;
+    }
+  }
+
+  &-danger {
+    background: @button-danger-background-color;
+
+    &.om-tag-plain {
+      color: @button-danger-background-color;
+    }
+  }
+
+  &-primary {
+    background: @primary;
+    &.om-tag-plain {
+      color: @primary;
+    }
+  }
+
+  &-plain {
+    background: @white;
+    color: @gray;
+  }
+}

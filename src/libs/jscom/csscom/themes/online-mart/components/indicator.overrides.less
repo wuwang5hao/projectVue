@@ -1,0 +1,52 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+.om-indicator {
+  position: absolute;
+  &-dot {
+    left: 50%;
+    bottom: 10px;
+  }
+  &-number {
+    right: 15px;
+    bottom: 8px;
+  }
+  & .dot {
+    height: @om-indicator-dot-height;
+    transform: translate3d(-50%, 0, 0);
+
+    &-vertical {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      width: @om-indicator-dot-height;
+      transform: translate3d(0, -50%, 0);
+    }
+
+    & .item-dot {
+      border-radius: 100%;
+      vertical-align: top;
+      display: inline-block;
+      background-color: @gray-dark;
+      width: @om-indicator-dot-height;
+      height: @om-indicator-dot-height;
+
+      &:not(:last-child) {
+        margin-right: @om-indicator-dot-height;
+      }
+
+      &-active {
+        background-color: @orange;
+      }
+    }
+  }
+
+  & .number {
+    background: rgba(0, 0, 0, 0.3);
+    color: @white;
+    font-size: @normal-font-size;
+    padding: 4px 16px;
+    border-radius: 999em;
+  }
+}

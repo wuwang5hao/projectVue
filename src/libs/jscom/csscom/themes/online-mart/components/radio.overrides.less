@@ -1,0 +1,55 @@
+/*******************************
+    radio   Overrides
+*******************************/
+
+.om-radio {
+  overflow: hidden;
+  user-select: none;
+
+  & > .radio-input,
+  & > .radio-label {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  & > .radio-input {
+    position: relative;
+    height: @om-radio-size;
+  }
+
+  & .control {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  & > .radio-label {
+    line-height: @om-radio-size;
+    margin-left: 10px;
+  }
+
+  .om-icon {
+    pointer-events: none;
+    font-size: @om-radio-size;
+  }
+
+  .om-icon-checked {
+    color: @om-radio-checked-color;
+  }
+
+  .om-icon-normal {
+    color: @om-radio-normal-color;
+  }
+
+  &-disabled {
+    .om-icon {
+      color: @om-radio-disable-color;
+      border-radius: 100%;
+      background-color: @om-radio-disable-background-color;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+## 文件组织
+* csscom 放置所有 css 公共样式
+* jscom 放置所有js公共库
+  * core 核心库
+  * net 相关网络库
+  * utils 工具封装，（工具封装尽量按照类型体系划分单例形式存在）
+
+* jspc 放置所有 pc 端控件公共库
+  * jspc/styles PC端控件基础样式（会引用csscom）
+  * jspc/tests 测试类
+  * jspc/utils 工具类
+  * jspc/widgets 控件类
+    * jspc/rpc PC端基于iView、rpc协议的控件基础类封装
+
+* jsapp 放置所有 app 端控件公共库
+  * jsapp/styles
+  * jsapp/tests
+  * jsapp/utils
+  * jsapp/widgets
+
+* omui 放置所有商城公共控件，与 iview 在同一层次
+  * omui 源于有赞vant控件，深度修改
+  * omui/components 放置所有基础控件
+  * omui/combines 一些组合业务逻辑控件放置在这里，以便开发其他商城时迅速复用
+  * omui/styles 放置该层次需要的样式代码
+
+* 层次划分与依赖关系
+* 整体分为 css 体系与js体系，js体系分为非控件层（jscom）与控件层（jspc,jsapp）
+* csscom 中自成一套体系
+  * common 为 less 基础功能模块
+  * definitions 为公共控件样式，会考虑到responsive响应式设计兼容所有屏幕大小
+  * mobile 为移动样式，只考虑移动端样式
+  * themes 为 csscom 的样式主题定制，基于不同的公共样式基础扩展出的不同主题风格
+  * 该分层继承体系来源于SemanticUI
+* js体系依赖先后关系：csscom <- jscom <- omui/iview/ant-design <- jspc/jsapp，严谨的单向依赖

@@ -1,0 +1,56 @@
+@font-face {
+  font-family: "DINAlternate-bold,DINAlternate";
+  src: url('./DIN-BoldAlternate.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+/*@font-face{*/
+/*  font-family: 'PingFangSC-Medium,PingFang SC';*/
+/*  src: url('PingFangSC-Medium.ttf');*/
+/*  font-weight: 500;*/
+/*  font-style: normal;*/
+/*}*/
+/*@font-face{*/
+/*  font-family: 'PingFangSC-Regular,PingFang SC';*/
+/*  src: url('PingFangSC-Regular.ttf');*/
+/*  font-weight: normal;*/
+/*  font-style: normal;*/
+/*}*/
+/*@font-face{*/
+/*  font-family: 'PingFangSC-Semibold,PingFang SC';*/
+/*  src: url('PingFangSC-Semibold.ttf');*/
+/*  font-weight: 600;*/
+/*  font-style: normal;*/
+/*}*/
+/*@font-face{*/
+/*  font-family: 'PingFangSC-Bold,PingFang SC';*/
+/*  src: url('PingFangSC-Bold.ttf');*/
+/*  font-weight: bold;*/
+/*  font-style: normal;*/
+/*}*/
+
+/* === SourceHanSansCN === */
+@font-face {
+  font-family: "SourceHanSansCN-Bold,SourceHanSansCN";
+  src: url('./SourceHanSansCN-Bold.otf');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face{
+  font-family: 'SourceHanSansCN-Medium,SourceHanSansCN';
+  src: url('SourceHanSansCN-Medium.otf');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face{
+  font-family: 'SourceHanSansCN-Regular,SourceHanSansCN';
+  src: url('SourceHanSansCN-Regular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face{
+  font-family: 'SourceHanSansCN-Semibold,SourceHanSansCN';
+  src: url('SourceHanSansCN-Normal.otf');
+  font-weight: 600;
+  font-style: normal;
+}

@@ -1,0 +1,162 @@
+/*******************************
+    tab-group   Overrides
+*******************************/
+
+.om-tab-group {
+  position: relative;
+.more {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: @white;
+    top:0;
+    right: 0;
+    z-index:100;
+    box-shadow: -5px 0 5px @grey10;
+  }
+  & > .wrap {
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    overflow: hidden;
+    // position: absolute;
+    &-page-top {
+      position: fixed;
+    }
+
+    &-content-bottom {
+      top: auto;
+      bottom: 0;
+    }
+
+    &-scrollable {
+      .om-tab-item {
+        flex: 0 0 22%;
+      }
+
+      .nav {
+        overflow: hidden;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+    }
+  }
+
+  & .nav {
+    display: flex;
+    width: 100%;
+    user-select: none;
+    position: relative;
+    background-color: @white;
+    padding-bottom: 0px;
+    &-line {
+      height: 100%;
+      padding-bottom: 15px; /* 15px padding to hide scrollbar in mobile safari */
+      box-sizing: content-box;
+    }
+
+    &-vertical {
+      flex-direction: column;
+      background-color: @grey2;
+      padding-bottom: 0px;
+      .nav-bar {
+        top: 0px;
+      }
+    }
+  }
+
+  & .nav-bar {
+    z-index: 1;
+    left: 0;
+    top: 35px;
+    height: 4px;
+    position: absolute;
+    .primary-gradient;
+    border-radius: 4px;
+    box-shadow: 0 0 6px @primary-15;
+  }
+
+  &-line {
+    // padding-top: @om-tab-group-line-height;
+
+    .wrap {
+      height: @om-tab-group-line-height;
+    }
+  }
+
+  &-vertical {
+    .wrap {
+      height: auto;
+    }
+  }
+
+
+}
+
+.om-tab-item {
+  flex: 1;
+  cursor: pointer;
+  padding: 0 5px;
+  font-size: 14px;
+  position: relative;
+  color: @text-color;
+  line-height: @om-tab-group-line-height;
+  text-align: center;
+  box-sizing: border-box;
+  /*background-color: @white;*/
+  min-width: 0; /* hack for flex ellipsis */
+
+  &-vertical {
+    line-height: @om-tab-group-vertical-height;
+  }
+
+  &-info {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    color: @white;
+    font-size: 10px;
+    font-weight: normal;
+    transform: scale(0.8);
+    text-align: center;
+    box-sizing: border-box;
+    padding: 0 6px;
+    min-width: 18px;
+    line-height: 18px;
+    border-radius: 9px;
+    background-color: @red;
+  }
+
+  span {
+    display: block;
+  }
+
+  &-active {
+    color: @active-color;
+    font-weight: 700;
+    font-size: 15px;
+    background-color: @white;
+  }
+
+  &-disabled {
+    color: @gray;
+
+    &:active {
+      background-color: @white;
+    }
+  }
+
+  &.pane {
+    display: none;
+
+    &-select {
+      display: block;
+    }
+  }
+}
