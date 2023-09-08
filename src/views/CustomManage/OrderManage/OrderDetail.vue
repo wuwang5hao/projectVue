@@ -150,7 +150,7 @@ import moment from 'moment';
 import { mapGetters, mapState } from 'vuex';
 import { ComponentUtil, formartPrice, formatterData } from 'jscom/utils/vueutil';
 // import ModifyInformation from './ModifyInformation';
-import ConfirmPaymentOrderModal from './ ConfirmPaymentOrderModal';
+// import ConfirmPaymentOrderModal from './ ConfirmPaymentOrderModal';
 import EditOrderypeModal from './EditOrderypeModal';
 import EditPrice from './EditPrice';
 
@@ -335,21 +335,21 @@ export default {
         .finally(() => {});
     },
     confirmPayment() {
-      new ComponentUtil(this.$store, this.$router).create({
-        cls: ConfirmPaymentOrderModal,
-        clsprops: {
-          pVisible: true,
-          pVersion: this.orderDetail.version,
-          pPayAmount: this.orderDetail.orderPayAmount
-        },
-        on: {
-          success: () => {
-            const orderId = this.$route.query.orderId;
-            const companyId = this.$route.query.companyId;
-            this.getOrderDetail(orderId, companyId);
-          }
-        }
-      });
+      // new ComponentUtil(this.$store, this.$router).create({
+      //   cls: ConfirmPaymentOrderModal,
+      //   clsprops: {
+      //     pVisible: true,
+      //     pVersion: this.orderDetail.version,
+      //     pPayAmount: this.orderDetail.orderPayAmount
+      //   },
+      //   on: {
+      //     success: () => {
+      //       const orderId = this.$route.query.orderId;
+      //       const companyId = this.$route.query.companyId;
+      //       this.getOrderDetail(orderId, companyId);
+      //     }
+      //   }
+      // });
     },
     /**
      * 订单类型变更

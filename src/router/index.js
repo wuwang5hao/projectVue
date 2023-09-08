@@ -10,7 +10,7 @@ import EnterpriseVerify from '@/views/CustomManage/UserInfoVerify';
 // import EnterpriseDetail from '@/views/CustomManage/EnterpriseDetail';
 import EnterpriseDetail from '@/views/CustomManage/UserInfoVerify/VerifyDetail';
 import OrderManage from '@/views/CustomManage/OrderManage/index';
-import OrderDetail from '@/views/CustomManage/OrderManage/OrderDetail';
+// import OrderDetail from '@/views/CustomManage/OrderManage/OrderDetail';
 import EnterpriseService from '@/views/CustomManage/EnterpriseService';
 import EnterpriseServiceReplyHistory from '@/views/CustomManage/EnterpriseServiceReplyHistory';
 import CustomList from '@/views/CustomManage/CustomList';
@@ -81,11 +81,11 @@ export default new Router({
           component: OrderManage,
           meta: { requiresAuth }
         },
-        {
-          path: 'orderManage/detail',
-          component: OrderDetail,
-          meta: { requiresAuth }
-        },
+        // {
+        //   path: 'orderManage/detail',
+        //   component: OrderDetail,
+        //   meta: { requiresAuth }
+        // },
         {
           path: 'customManage/customList/customBasicInfo',
           component: CustomBasicInfo,

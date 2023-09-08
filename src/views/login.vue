@@ -2,13 +2,12 @@
   <div class="login-container">
     <div class="login_header">
       <img src="../static/img/qylogo.png" />
-      <span>D碳云</span>
+      <span>wuwang</span>
       <div class="line"></div>
-      <span>管理后台</span>
+      <span>学习后台</span>
     </div>
     <div class="login-content">
       <div class="login_content">
-        <img src="../static/img/1.png" style="height:314px;">
         <div class="login-content-right">
           <p class="login-content-right-title">登录</p>
           <a-form-model ref="form" layout="vertical" :model="formModel" :rules="rules">
@@ -34,7 +33,7 @@
               @change="onChange">记住密码</a-checkbox>
               <a-tooltip placement="top">
                 <template slot="title">
-                  <span>请联系公司管理员</span>
+                  <span>请联系管理员</span>
                 </template>
                 <span class="foreget_password">忘记密码？</span>
               </a-tooltip>
@@ -50,14 +49,7 @@
       </div>
     </div>
     <div class="login-footer">
-      <p>上海东方低碳科技产业股份有限公司
-        <!-- <a href="http://beian.miit.gov.cn/" target="_blank">沪ICP备11019429号-3-2</a></p> -->
-        <a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备11019429号-3</a></p>
-      <p>Shanghai  East Low Carbon Technology Industry CO., LTD. COPYRIGHT 2022</p>
-      <p style="marginTop:12px;">
-        <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31010502006447" target="_blank">
-          <img src="../static/img/beian.jpg">
-        </a> 沪公网安备 31010502006447号</p>
+      <p>个人项目</p>
     </div>
   </div>
 </template>
@@ -140,13 +132,13 @@ export default {
     }),
     // 判断是否由邮件点击进入
     checkMailToken () {
-      if (!this.pToken) {
-        return
-      }
-      let api = this.$apiUtil.getAuthApi()
-      api.check_mail_token({mailToken: this.pToken}).then(({data}) => {
-        this.mailResult = data
-      })
+      // if (!this.pToken) {
+      //   return
+      // }
+      // let api = this.$apiUtil.getAuthApi()
+      // api.check_mail_token({mailToken: this.pToken}).then(({data}) => {
+      //   this.mailResult = data
+      // })
     },
     // 销毁所有弹出窗口
     destroyAllModal () {
@@ -176,51 +168,53 @@ export default {
     },
     // 登录
     login () {
-      this.clearUserOauth()
-      let api = this.$apiUtil.getAuthApi()
-      let jsonModel = {...this.formModel}
-      jsonModel['context'] = {
-        message: ''
-      }
+      // this.clearUserOauth()
+      // let api = this.$apiUtil.getAuthApi()
+      // let jsonModel = {...this.formModel}
+      // jsonModel['context'] = {
+      //   message: ''
+      // }
+      this.redirectUrl()
       // jsonModel.password =  this.Encrypt.encrypt(this.formModel.password)
-      this.isLoading = true
-      api.login(jsonModel).then(({data, message, response}) => {
-        this.setUserInfo(data)
-        // 首次登录需要修改密码
-        if (data.status === '1') {
-          this.firstModifyPassword()
-        } else if (data.isLogin === '1') {
-          // 用户已经登录，替换登录
-          this.$confirm({
-            content: message,
-            okText: '确定',
-            cancelText: '取消',
-            centered: true,
-            class: 'confirm-modal',
-            onOk: () => {
-              this.replaceLogin()
-            }
-          })
-        } else {
-          this.$message.success('登录成功')
-          this.updateLoginInfo(data)
-          this.redirectUrl()
-        }
-        this.isLoading = false
-      }).catch((error) => {
-        this.isLoading = false
-      })
+      // this.isLoading = true
+      // api.login(jsonModel).then(({data, message, response}) => {
+      //   this.setUserInfo(data)
+      //   // 首次登录需要修改密码
+      //   if (data.status === '1') {
+      //     this.firstModifyPassword()
+      //   } else if (data.isLogin === '1') {
+      //     // 用户已经登录，替换登录
+      //     this.$confirm({
+      //       content: message,
+      //       okText: '确定',
+      //       cancelText: '取消',
+      //       centered: true,
+      //       class: 'confirm-modal',
+      //       onOk: () => {
+      //         this.replaceLogin()
+      //       }
+      //     })
+      //   } else {
+      //     this.$message.success('登录成功')
+      //     // this.updateLoginInfo(data)
+      //     this.redirectUrl()
+      //   }
+      //   this.isLoading = false
+      // }).catch((error) => {
+      //   this.isLoading = false
+      // })
     },
     // 登录成功之后跳转页面判断逻辑
     redirectUrl () {
       let redirectUrl = '/manager/home'
-      if (this.mailResult && this.mailResult.url) {
-        let result = [this.mailResult.url]
-        if (this.mailResult.params) {
-          result = result.concat(this.mailResult.params)
-        }
-        redirectUrl = result.join('/')
-      }
+      // if (this.mailResult && this.mailResult.url) {
+      //   let result = [this.mailResult.url]
+      //   if (this.mailResult.params) {
+      //     result = result.concat(this.mailResult.params)
+      //   }
+      //   redirectUrl = result.join('/')
+      // }
+      // redirectUrl = result.join('/')
       this.$router.push(redirectUrl)
     },
     // 存储登录信息
@@ -233,15 +227,15 @@ export default {
     },
     // 替换登录
     replaceLogin () {
-      let api = this.$apiUtil.getAuthApi()
+      // let api = this.$apiUtil.getAuthApi()
       let jsonModel = {...this.formModel}
       // jsonModel.password =  this.Encrypt.encrypt(this.formModel.password)
-      api.confirm_replace_login(jsonModel).then(({data}, request, response) => {
-        this.setUserInfo(data)
-        this.redirectUrl()
-      }).catch((error) => {
+      // api.confirm_replace_login(jsonModel).then(({data}, request, response) => {
+      //   this.setUserInfo(data)
+      //   this.redirectUrl()
+      // }).catch((error) => {
 
-      })
+      // })
     },
     // 第一次登录修改密码
     firstModifyPassword () {

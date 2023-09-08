@@ -323,7 +323,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['userInfo']),
+    // ...mapState(['userInfo']),
     firstRowCompanyOptions() {
       let options = this.companyOptions.slice(0, 3);
       return options || [];
